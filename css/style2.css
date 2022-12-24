@@ -1,0 +1,438 @@
+.indukplay {
+	width: 100%;
+	top:0px;
+}
+
+.iframe-container {
+	overflow: hidden;
+	/*padding-top: 30%;*/
+	position: relative;
+}
+
+.iframe-container iframe {
+	border: 0;
+	height: 100%;
+	left: 0;
+	position: relative;
+	top: 65px;
+	width: 100%;
+}
+
+.columnvodbimbel {
+	flex: 25%;
+	max-width: 25%;
+}
+
+@media screen and (max-width: 1400px) {
+	.columnmenu {
+		flex: 30%;
+		max-width: 30%;
+		display: none;
+	}
+
+	.columnvod {
+		flex: 20%;
+		max-width: 20%;
+	}
+
+	.columnvodbimbel {
+		flex: 25%;
+		max-width: 25%;
+	}
+
+	.thumbbimbel {
+		width:220px;
+		height:140px;
+	}
+
+	.indukplay {
+		width: 50%;
+	}
+
+	.avatar {
+		height: 120px;
+	}
+	.lebarikon {
+		width:120px;
+	}
+
+	.slider {
+		width: 80%;
+	}
+}
+
+@media screen and (max-width: 1100px) {
+
+	.columnmenu {
+		flex: 100%;
+		max-width: 100%;
+		display: none;
+	}
+
+	.columnvod {
+		flex: 30%;
+		max-width: 30%;
+	}
+
+	.columnvodbimbel {
+		flex: 33.3%;
+		max-width: 33.3%;
+	}
+
+	.thumbbimbel {
+		width:220px;
+		height:140px;
+	}
+
+	.indukplay {
+		width: 60%;
+	}
+
+	.avatar {
+		height: 120px;
+		padding-bottom: 20px;
+	}
+	.lebarikon {
+		width:120px;
+		padding-bottom: 20px;
+	}
+
+	.slider {
+		width: 80%;
+	}
+}
+
+@media screen and (max-width: 950px) {
+
+	.columnmenu {
+		flex: 50%;
+		max-width: 50%;
+	}
+
+	.columnvod {
+		flex: 50%;
+		max-width: 50%;
+	}
+
+	.columnvodbimbel {
+		flex: 50%;
+		max-width: 50%;
+	}
+
+	.thumbbimbel {
+		width:176px;
+		height:112px;
+	}
+
+	.indukplay {
+		width: 60%;
+	}
+
+	.avatar {
+		height: 120px;
+		padding-bottom: 20px;
+	}
+	.lebarikon {
+		width:100px;
+		padding-bottom: 20px;
+	}
+
+	.slider {
+		width: 80%;
+	}
+}
+
+@media screen and (max-width: 766px) {
+
+	.columnmenu {
+		flex: 100%;
+		max-width: 100%;
+		display: none;
+	}
+
+	.columnvod {
+		flex: 100%;
+		max-width: 100%;
+	}
+
+	.columnvodbimbel {
+		flex: 50%;
+		max-width: 50%;
+	}
+
+	.thumbbimbel {
+		width:176px;
+		height:112px;
+	}
+
+	.indukplay {
+		margin-top:20px;
+		width: 60%;
+	}
+
+	.avatar {
+		height: 120px;
+		padding-bottom: 20px;
+	}
+	.lebarikon {
+		width:120px;
+		padding-bottom: 20px;
+	}
+
+	.slider {
+		width: 80%;
+	}
+
+}
+
+/* Responsive layout - makes the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+
+	.columnmenu {
+		flex: 100%;
+		max-width: 100%;
+		display: none;
+	}
+
+	.columnvod {
+		flex: 100%;
+		max-width: 100%;
+	}
+
+	.columnvodbimbel {
+		flex: 50%;
+		max-width: 50%;
+	}
+
+	.rowvod {
+		padding: 10px 10px;
+	}
+
+	.grup {
+		color: #0c0c0c;
+	}
+
+	.thumbbimbel {
+		width:150px;
+		height:100px;
+
+	}
+
+	.indukplay {
+		width: 90%;
+	}
+
+	#video-youtube{
+		max-width: 97%;
+		width: 97%;
+		height: 100%;
+		/*position: fixed;*/
+		top: 130px;
+		text-align: center;
+		alignment: center;
+	}
+
+	#video-placeholder {
+		text-align: center;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 10px;
+		width: auto;
+		height: auto;
+	}
+
+	.avatar {
+		height: 50px;
+		padding-bottom: 20px;
+	}
+	.lebarikon {
+		width:50px;
+		padding-bottom: 20px;
+		font-size:10px;
+	}
+
+	.slider {
+		width: 95%;
+	}
+
+	#video_playermp4 {
+		width: 100%;
+	}
+}
+
+@media screen and (max-width: 400px) {
+
+	.columnmenu {
+		flex: 100%;
+		max-width: 100%;
+		display: none;
+	}
+
+	.columnvod {
+		flex: 100%;
+		max-width: 100%;
+	}
+
+	.columnvodbimbel {
+		flex: 50%;
+		width: 50%;
+	}
+
+	.rowvod {
+		padding: 10px 10px;
+	}
+
+	.grup {
+		color: #0c0c0c;
+	}
+
+	.thumbbimbel {
+		width:120px;
+		height:76px;
+		margin: auto;
+		padding: 0;
+	}
+
+	.indukplay {
+		width: 90%;
+	}
+
+	#video-youtube{
+		max-width: 97%;
+		width: 97%;
+		height: 100%;
+		/*position: fixed;*/
+		top: 130px;
+		text-align: center;
+		alignment: center;
+	}
+
+	#video-placeholder {
+		text-align: center;
+		margin-left: auto;
+		margin-right: auto;
+		margin-bottom: 10px;
+		width: auto;
+		height: auto;
+	}
+
+	.avatar {
+		height: 50px;
+		padding-bottom: 20px;
+	}
+	.lebarikon {
+		width:50px;
+		padding-bottom: 20px;
+		font-size:10px;
+	}
+
+	.slider {
+		width: 95%;
+	}
+
+	#video_playermp4 {
+		width: 100%;
+	}
+}
+
+.btn-oyen {
+	font-size:15px;
+	font-family:Arial;
+	width:140px;
+	height:40px;
+	border-width:1px;
+	color:#14396a;
+	border-color:#333333;
+	font-weight:bold;
+	border-top-left-radius:4px;
+	border-top-right-radius:4px;
+	border-bottom-left-radius:4px;
+	border-bottom-right-radius:4px;
+	box-shadow:inset 0px 1px 0px 0px #fff6af;
+	text-shadow:inset 0px 1px 0px #ffee66;
+	background:linear-gradient(#ffec64, #ffab23);
+  }
+  
+  .btn-oyen:hover {
+	background: linear-gradient(#ffab23, #ffec64);
+  }
+
+  .btn-ijonom {
+	font-size:12px;
+	font-family:Arial;
+	border-width:1px;
+	color:#000;
+	border-color:#83c41a;
+	border-top-left-radius:6px;
+	border-top-right-radius:6px;
+	border-bottom-left-radius:6px;
+	border-bottom-right-radius:6px;
+	box-shadow:inset 0px 1px 0px 0px #d9fbbe;
+	text-shadow:inset 0px 1px 0px #86ae47;
+	background:linear-gradient(#b8e356, #a5cc52);
+  }
+  
+  .btn-ijonom:hover {
+	background: linear-gradient(#a5cc52, #b8e356);
+  }
+
+  .btn-birunom {
+	font-size:12px;
+	font-family:Arial;
+	border-width:1px;
+	color:#000;
+	border-color:#84bbf3;
+	border-top-left-radius:6px;
+	border-top-right-radius:6px;
+	border-bottom-left-radius:6px;
+	border-bottom-right-radius:6px;
+	box-shadow:inset 0px 1px 0px 0px #dcecfb;
+	text-shadow:inset 0px 1px 0px #528ecc;
+	background:linear-gradient(#bddbfa, #80b5ea);
+  }
+  
+  .btn-birunom:hover {
+	background: linear-gradient(#80b5ea, #bddbfa);
+  }
+
+  .btn-abu {
+	font-size:12px;
+	font-family:Arial;
+	border-width:1px;
+	color:#777777;
+	border-color:#dcdcdc;
+	border-top-left-radius:6px;
+	border-top-right-radius:6px;
+	border-bottom-left-radius:6px;
+	border-bottom-right-radius:6px;
+	box-shadow:inset 0px 1px 0px 0px #ffffff;
+	text-shadow:inset 0px 1px 0px #ffffff;
+	background:linear-gradient(#ededed, #dfdfdf);
+  }
+  
+  .btn-abu:hover {
+	background: linear-gradient(#dfdfdf, #ededed);
+  }
+
+  .btn-abangnom {
+	font-size:12px;
+	font-family:Arial;
+	border-width:1px;
+	color:#000;
+	border-color:#d83526;
+	border-top-left-radius:6px;
+	border-top-right-radius:6px;
+	border-bottom-left-radius:6px;
+	border-bottom-right-radius:6px;
+	box-shadow:inset 0px 1px 0px 0px #f7c5c0;
+	text-shadow:inset 0px 1px 0px #b23e35;
+	background:linear-gradient(#fc8d83, #e4685d);
+  }
+  
+  .btn-abangnom:hover {
+	background: linear-gradient(#e4685d, #fc8d83);
+  }
+
+  .logobagikan {
+	width:50px !important;
+  }
