@@ -787,8 +787,9 @@ class M_payment extends CI_Model
 			$this->db->where('status',$status);
 		if ($pakaibatas!=null)
 			$this->db->where('(now() >= tgl_bayar AND now() <= IF(tgl_berakhir="2001-01-01 00:00:00",LAST_DAY(tgl_bayar),tgl_berakhir))');
-		$this->db->where('(SUBSTRING(order_id,1,2)="EK" OR SUBSTRING(order_id,1,3)="TVS") OR
-		SUBSTRING(order_id,1,3)="TP2" OR SUBSTRING(order_id,1,3)="TF2"');
+		$this->db->where('(SUBSTRING(order_id,1,3)="EKS")');
+		// $this->db->where('((SUBSTRING(order_id,1,2)="EK" OR SUBSTRING(order_id,1,3)="TVS") OR
+		// SUBSTRING(order_id,1,3)="TP2" OR SUBSTRING(order_id,1,3)="TF2")');
 		$query = $this->db->get();
 		$ret = $query->result();
 		if ($query)
@@ -812,7 +813,7 @@ class M_payment extends CI_Model
 			$this->db->where('status',$status);
 		if ($pakaibatas!=null)
 			$this->db->where('(now() >= tgl_bayar AND now() <= IF(tgl_berakhir="2001-01-01 00:00:00",LAST_DAY(tgl_bayar),tgl_berakhir))');
-		$this->db->where('(SUBSTRING(order_id,1,2)="EK")');
+		$this->db->where('(SUBSTRING(order_id,1,3)="EKS")');
 		$this->db->group_by('(SUBSTRING(tp.tgl_bayar,6,2))');
 		$query = $this->db->get();
 		$ret = $query->result();

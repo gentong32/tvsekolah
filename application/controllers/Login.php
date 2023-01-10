@@ -1180,6 +1180,7 @@ class Login extends CI_Controller
 			$linkprofil = 'v_profile_cv';
 		else
 			$linkprofil = 'v_profile';
+			
 
 		if ($this->session->userdata('loggedIn')) {
 			$data = array();
@@ -1193,12 +1194,24 @@ class Login extends CI_Controller
 
 			$data['addedit'] = "edit";
 			$ambiluserdata = $this->M_login->getUser($this->session->userdata('id_user'));
+			// echo var_dump($ambiluserdata);
+			// die();
 
+			if ($ambiluserdata["npsn"]!="")
+			{
+				$this->load->Model('M_channel');
+				$datasekolah = $this->M_channel->getSekolahKu($ambiluserdata["npsn"]);
+				$data['jenjangsekolah']=$datasekolah[0]->idjenjang;
+			}
+			else
+			{
+				$data['jenjangsekolah']="";
+			}
 			// if ($opsi=="tes")
 			// {
-			// 	echo "<pre>";
-			// 	echo var_dump($ambiluserdata);
-			// 	echo "</pre>";
+				// echo "<pre>";
+				// echo var_dump($ambiluserdata);
+				// echo "</pre>";
 			// }
 			$statususer = getstatususer();
 			if (!$statususer)
@@ -1572,12 +1585,14 @@ class Login extends CI_Controller
 
 		$this->load->model('M_login');
 
+		$npsn = $this->input->post('inpsn');
+
 		if ($this->session->userdata('sebagai') == 3 || $this->session->userdata('sebagai') == 4)
 			$data['nomor_nasional'] = $this->input->post('inomor2');
 		else
 			$data['nomor_nasional'] = $this->input->post('inomor');
 		$data['sekolah'] = $this->input->post('isekolah');
-		$data['npsn'] = $this->input->post('inpsn');
+		$data['npsn'] = $npsn;
 		$data['bidang'] = $this->input->post('ibidang');
 		$data['pekerjaan'] = $this->input->post('ikerja');
 		$data['hp'] = $this->input->post('ihp');
@@ -1595,8 +1610,9 @@ class Login extends CI_Controller
 			$data['kd_provinsi'] = $this->input->post('ipropinsi');
 		}
 
+		$jenjangsekolah = $this->input->post('ijenjangsekolah');
 
-		if ($pilsebagai == 1 || $this->session->userdata('verifikator')) {
+		if ($jenjangsekolah>0 || $pilsebagai == 1 || $this->session->userdata('verifikator')) {
 
 		//$datasek['kd_negara'] = $this->input->post('inegara');
 			if ($data['kd_negara'] > 1) {
@@ -1610,7 +1626,7 @@ class Login extends CI_Controller
 			$datasek['alamat_sekolah'] = $this->input->post('ialamatsekolah');
 			$datasek['kecamatan'] = $this->input->post('ikecamatansekolah');
 			$datasek['desa'] = $this->input->post('idesasekolah');
-			$datasek['id_jenjang'] = $this->input->post('ijenjangsekolah');
+			$datasek['id_jenjang'] = $jenjangsekolah;
 			$datasek['status'] = 0;
 
 			$datasek2 = array();
@@ -1643,6 +1659,9 @@ class Login extends CI_Controller
 				$this->M_login->addsekolah($datasek);
 				$this->M_login->addchnsekolah($datasek2);
 			}
+			// echo "CODE1234:".$npsn; 
+			// die();
+			$this->M_login->updatejenjangchnsekolah($npsn,$jenjangsekolah);
 		}
 
 		$idjenjang = 0;
@@ -1929,7 +1948,8 @@ class Login extends CI_Controller
 			$this->M_login->addchnsekolah($datasek2);
 			$this->load->Model('M_eksekusi');
 			$adaver = $this->M_eksekusi->getveraktif($npsn);
-			if($adaver)
+			$cekcalver = $this->session->userdata("verifikator");
+			if($adaver && $cekcalver>0)
 			$isi[0]->ada_ver = "ada";
 			else
 			$isi[0]->ada_ver = "gakada";

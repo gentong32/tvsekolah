@@ -207,9 +207,11 @@ class Marketing extends CI_Controller
 
 	public function daftar_event($bulan=null, $tahun=null)
 	{
+		$data = array();
+		
+		$data['dash'] = isset($_GET['dash']) ? $_GET['dash'] : '0';
 		$this->load->helper('Video');
 		$idmarketing = $this->session->userdata('id_user');
-		$data = array();
 		$data['konten'] = 'v_marketing_dafevent';
 
 		$datesekarang = new DateTime();

@@ -1335,6 +1335,8 @@ if ($addedit == "add") {
 	function ambilkelas() {
 		var jenjang = $('#ijenjang').val();
 
+		// alert (jenjang);
+
 		if (jenjang == 6) {
 			$('#ikelas').val(0);
 			$('#dkelas').hide();
@@ -1380,7 +1382,14 @@ if ($addedit == "add") {
 		if ($('#ijurusan').val() == null)
 			$('#dmapel').html("<input type='hidden' id='ijurusan' value=0 />");
 
-		if (jenjang == 1) {
+		if (jenjang == 3) {
+			$('#imapel').val(0);
+			$('#dmapel').hide();
+		} else {
+			$('#dmapel').show();
+		}
+
+		if (jenjang == 5) {
 			var isihtmlb0 = '<br><label for="select" class="col-md-12 control-label">Aktifitas</label><div class="col-md-12">';
 			var isihtmlb1 = '<select class="form-control" name="imapel" id="imapel">' +
 				'<option value="0">-- Pilih --</option>';
@@ -1433,7 +1442,7 @@ if ($addedit == "add") {
 		var kelasbener = $('#ikelas').val() - 2;
 		var jenjang = $('#ijenjang').val();
 
-		if (jenjang != 2) {
+		if (jenjang != 8) {
 			var isihtmlc = '<input type="hidden" id="itema" name="itema" value=0 />';
 			$('#dtema').html(isihtmlc);
 		} else {
@@ -1461,8 +1470,8 @@ if ($addedit == "add") {
 
 	function ambiljurusan() {
 		var jenjang = $('#ijenjang').val();
-
-		if (jenjang != 5 && jenjang != 6) {
+ 
+		if (jenjang != 6 && jenjang != 15) {
 			var isihtmld = '<input type="hidden" id="ijurusan" name="ijurusan" value=0 />';
 			$('#djurusan').html(isihtmld);
 		} else {

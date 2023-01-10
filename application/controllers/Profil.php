@@ -449,7 +449,20 @@ class Profil extends CI_Controller
 		} else if ($getstatus['status_bayar3'] == "lunas") {
 			$data['keteranganbayar1'] = "-";
 			$data['keteranganbayar2'] = "Pembayaran Sekolah Pro Lunas";
-			$keteranganekskul = "10 siswa ekskul gratis";
+			$keteranganekskul = "20 siswa ekskul gratis";
+		} else if ($getstatus['status_bayar'] == "masatenggang") {
+			$data['keteranganbayar1'] = number_format($standarbayar->iuran, 0, ',', '.');
+			$data['keteranganbayar2'] = "Masuk Masa Tenggang";
+		} else if ($getstatus['status_bayar'] == "lunas") {
+			$data['keteranganpro'] = "";
+			if ($getstatus['selisih'] < 0)
+				$keterangan2 = "Lunas hingga " . substr(namabulan_pendek($getstatus['expired']), 3);
+			else
+				$keterangan2 = "Pembayaran bulan ini lunas";
+			$data['keteranganbayar1'] = "-";
+			$data['keteranganbayar2'] = $keterangan2;
+			$keteranganekskul = "5 siswa ekskul gratis";
+			$data['keteranganstatus'] = "Sekolah Lite";
 		} else if ($getstatus['status_dibayardonatur'] == "oke") {
 			$data['keteranganbayar1'] = "-";
 			$data['keteranganbayar2'] = "Pembayaran Bulan Ini Dibiayai oleh Donatur";
@@ -462,19 +475,6 @@ class Profil extends CI_Controller
 			$data['keteranganbayar1'] = "-";
 			$data['keteranganbayar2'] = "Pembayaran Bulan Ini Lunas oleh Siswa";
 			$data['keteranganstatus'] = "Sekolah Lite Gratis dari Siswa Kelas Virtual";
-		} else if ($getstatus['status_bayar'] == "masatenggang") {
-			$data['keteranganbayar1'] = number_format($standarbayar->iuran, 0, ',', '.');
-			$data['keteranganbayar2'] = "Masuk Masa Tenggang";
-		} else if ($getstatus['status_bayar'] == "lunas") {
-			$data['keteranganpro'] = "";
-			if ($getstatus['selisih'] < 0)
-				$keterangan2 = "Lunas hingga " . substr(namabulan_pendek($getstatus['expired']), 3);
-			else
-				$keterangan2 = "Pembayaran bulan ini lunas";
-			$data['keteranganbayar1'] = "-";
-			$data['keteranganbayar2'] = $keterangan2;
-			$keteranganekskul = "3 siswa ekskul gratis";
-			$data['keteranganstatus'] = "Sekolah Lite";
 		} else if ($getstatus['status_bayar2'] == "lunas") {
 			$data['keteranganbayar1'] = "-";
 			$data['keteranganbayar2'] = "Pembayaran Pembayaran Ekskul oleh Sekolah Lunas";
@@ -1160,10 +1160,6 @@ class Profil extends CI_Controller
 
 			if ($getstatus['status_dibayardonatur'] == "oke") {
 				$data['keteranganbayar'] = "Pembayaran TVSekolah telah Dibiayai oleh " . $getstatus['nama_donatur'];
-			} else if ($getstatus['status_ekskul'] == "oke") {
-				$data['keteranganbayar'] = "Pembayaran Bulan Ini Lunas oleh Siswa Ekskul";
-			} else if ($getstatus['status_virtualkelas'] == "oke") {
-				$data['keteranganbayar'] = "Pembayaran Bulan Ini Lunas oleh Siswa Kelas Virtual";
 			} else if ($getstatus['status_bayar'] == "lunas") {
 				$data['lunas'] = true;
 				if ($getstatus['melalui1'] == "midtrans") {
@@ -1181,6 +1177,10 @@ class Profil extends CI_Controller
 					$data['keterangansiplah'] = "[Sekolah aktif dengan paket Lite]";
 					$data['keteranganbayar'] = "Tagihan sudah lunas melalui SIPLAH";
 				}
+			} else if ($getstatus['status_ekskul'] == "oke") {
+				$data['keteranganbayar'] = "Pembayaran Bulan Ini Lunas oleh Siswa Ekskul";
+			} else if ($getstatus['status_virtualkelas'] == "oke") {
+				$data['keteranganbayar'] = "Pembayaran Bulan Ini Lunas oleh Siswa Kelas Virtual";
 			} else if ($getstatus['status_bayar'] == "masatenggang") {
 				$data['keteranganbayar'] = "Masuk Masa Tenggang";
 			} else if ($getstatus['status_bayar'] == "belumbayar") {

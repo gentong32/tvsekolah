@@ -303,6 +303,7 @@ class M_video extends CI_Model
     {
         $this->db->from('daf_jenjang');
         $this->db->where('(urutan>0)');
+		$this->db->order_by('urutan','asc');
         $result = $this->db->get()->result();
         return $result;
     }

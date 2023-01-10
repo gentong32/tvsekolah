@@ -120,7 +120,7 @@ if (!isset($sudahdicekagency))
 				<div class="col-lg-12">
 					<h3 class="text-center">Video <?php echo $akhiran; ?></h3>
 					<center><span style="color: red">
-					<?php if ($sudahdicekverifikator == "belum") { ?>
+					<?php if (!$this->session->userdata('a02') && $sudahdicekverifikator == "belum") { ?>
 						Untuk video yang diunggah harus diverifikasi oleh Verifikator Sekolah terlebih dahulu sebelum bisa digunakan.
 						<br>
 					<?php }
@@ -990,6 +990,7 @@ if (!isset($sudahdicekagency))
 			method: "POST",
 			data: {id: idx, status: statusnya},
 			success: function (result) {
+				alert(result.substr(0,1));
 				if (result == "jangan")
 					alert("Sudah dipakai di bagian lain");
 				else {

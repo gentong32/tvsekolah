@@ -255,15 +255,20 @@ class M_marketing extends CI_Model
 		return $result;
 	}
 
-	public function getDafEventVer($kodeevent=null)
+	public function getDafEventVer($kodeevent=null, $tglawal=null,$tglakhir=null)
 	{
 		// $this->db->select('tu.*');
+
 		$this->db->from('tb_marketing tm');
 		$this->db->join('tb_mentor_calver_tugas tt', 'tm.kode_referal = tt.kode_event', 'left');
 		$this->db->where('jenis_event', 2);
 		$this->db->where('id_siam', $this->session->userdata('id_user'));
 		if ($kodeevent!=null)
 		$this->db->where('kode_referal', $kodeevent);
+		if ($tglawal!=null)
+		{
+			$this->db->where('tgl_jalan>"'.$tglawal.'" AND tgl_jalan<"'.$tglakhir.'"');
+		}
 		
 		$result = $this->db->get()->result();
 		return $result;

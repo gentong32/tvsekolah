@@ -163,6 +163,9 @@ $selectedb2="";
 $selectedkelas="";
 $selectedbkelas="";
 
+$pilsel=[];
+$pilsel[$jenjangsekolah] = "selected";
+
 if ($opsiuser=="koderef")
 {
 	$selected1="";
@@ -760,23 +763,24 @@ else if ($opsiuser=="kelasuser")
 									</div>
 								</div>
 
-								<div class="form-group" id="djanjang">
+							</div>
+
+							<div class="form-group" id="djanjang">
 									<label for="select" class="col-md-12 control-label">Jenjang</label>
 									<div class="col-md-12">
-										<select class="form-control" name="ijenjangsekolah" id="ijenjangsekolah">
-											<option value="0">-- Pilih --</option>
-											<option value="1">PAUD</option>
-											<option value="2">SD/MI</option>
-											<option value="3">SMP/MTs</option>
-											<option value="4">SMA/MA</option>
-											<option value="5">SMK/MAK</option>
-											<option value="6">PT</option>
-											<option value="7">PKBM/Kursus</option>
+										<select <?php echo $disabledawal; ?> class="form-control" name="ijenjangsekolah" id="ijenjangsekolah">
+											<option <?=$pilsel[0]?> value="0">-- Pilih --</option>
+											<option <?=$pilsel[3]?> value="3">PAUD</option>
+											<option <?=$pilsel[5]?> value="5">TK</option>
+											<option <?=$pilsel[8]?> value="8">SD/MI</option>
+											<option <?=$pilsel[11]?> value="11">SMP/MTs</option>
+											<option <?=$pilsel[14]?> value="14">SMA/MA</option>
+											<option <?=$pilsel[15]?> value="15">SMK/MAK</option>
+											<option <?=$pilsel[6]?> value="6">PT</option>
+											<option <?=$pilsel[7]?> value="7">PKBM/Kursus</option>
 										</select>
 									</div>
 								</div>
-
-							</div>
 
 							<div class="form-group">
 								<label for="inputDefault" class="col-md-12 control-label">Nama Lembaga</label>
@@ -1241,9 +1245,16 @@ else if ($opsiuser=="kelasuser")
 				$('#isekolah').focus();
 				$.each(result, function (i, result) {
 					if (result.nama_sekolah != "gaknemu") {
-
 						$('#inomor').focus();
 						$('#isekolah').prop('readonly', true);
+						if (result.id_jenjang>0)
+						{
+							$('#ijenjangsekolah').val(result.id_jenjang);
+							<?php if ($this->session->userdata('verifikator')==0) {?>
+								$('#ijenjangsekolah').prop('disabled', true);
+							<?php } ?>
+						}
+						
 						$('#isekolah').val(result.nama_sekolah);
 						$('#ikotasekolah').val(result.nama_kota);
 						//alert(result.nama_sekolah);
@@ -1525,14 +1536,16 @@ else if ($opsiuser=="kelasuser")
 		} else {
 			if ($('#inpwp').val().trim() == "")
 				$('#ketawal').html("NPWP harus diisi");
-			else if ($('#ikota').val() == 0 && $('#ikotasekolah').val() == "")
-				$('#ketawal').html("Kota harus diisi");
 			else if (ijinlewat1 == false && ijinlewat2 == false)
 				$('#ketawal').html("Data Personal dan Data Sekolah/Instansi harus dilengkapi");
 			else if (ijinlewat1 == false)
 				$('#ketawal').html("Data Personal belum lengkap");
 			else if (ijinlewat2 == false)
 				$('#ketawal').html("Data Sekolah/Instansi belum dilengkapi");
+			else if ($('#inpsn').val() == "")
+				$('#ketawal').html("NPSN Sekolah harus diisi");
+			else if ($('#ikota').val() == 0 && $('#ikotasekolah').val() == "")
+				$('#ketawal').html("Kota harus diisi");
 
 			var idtampil = setInterval(klirket, 3000);
 
@@ -1564,6 +1577,7 @@ else if ($opsiuser=="kelasuser")
 		<?php } ?>
 		document.getElementById('ihp').readOnly = false;
 		document.getElementById('inpwp').readOnly = false;
+		document.getElementById('ijenjangsekolah').disabled = false;
 		document.getElementById('glaki').disabled = false;
 		document.getElementById('gperempuan').disabled = false;
 		document.getElementById('itgl_lahir').readOnly = false;
@@ -1625,6 +1639,7 @@ else if ($opsiuser=="kelasuser")
 		<?php } ?>
 		document.getElementById('ihp').readOnly = true;
 		document.getElementById('inpwp').readOnly = true;
+		document.getElementById('ijenjangsekolah').disabled = true;
 		document.getElementById('glaki').disabled = true;
 		document.getElementById('gperempuan').disabled = true;
 		document.getElementById('itgl_lahir').readOnly = true;

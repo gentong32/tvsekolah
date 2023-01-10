@@ -165,6 +165,7 @@ $namastatus = Array('', 'Menunggu Pembayaran', '', 'Lunas');
 			else
 				{
 					$namapembayar = "SISWA";
+					// if (substr($datane->order_id,0,3)=="EKF")
 					$sstatus = $datane->totaluser." siswa bayar";
 				}
 

@@ -32,7 +32,7 @@ $jumlahminimalpeserta = 10;
 					<center>
 						<span style="font-size: 14px; margin-bottom: 10px;">
 						<?php 
-							if ($statuspeserta == 0) { ?>
+							if ($statuspeserta == 0 || $statuspeserta == 10) { ?>
 
 								<button onclick="return ikutekskul();" class="btn-main">Saya Mau Ikut Ekskul</button>
 							<?php } else if ($statuspeserta == 1 && $jmlpeserta >= $jumlahminimalpeserta) { ?>

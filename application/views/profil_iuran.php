@@ -81,7 +81,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												<div class="dash_head">
 													<h3><span><i class="fa fa-dollar"></i> Pembayaran Ekskul Majalah Dinding TV Sekolah (Lite)</span>
 													</h3>
-													Lite dapat 3 siswa ekskul gratis
+													Lite dapat 5 siswa ekskul gratis
 												</div>
 												<div class="list_cont">
 													Untuk keterlambatan pembayaran hingga 2 bulan atau lebih akan
@@ -129,7 +129,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 												<div class="dash_head" style="word-break: keep-all">
 													<h3><span><i class="fa fa-dollar"></i> Pembayaran Ekskul Majalah Dinding TV Sekolah (Pro)</span>
 													</h3>
-													Pro dapat 10 siswa ekskul gratis
+													Pro dapat 20 siswa ekskul gratis
 												</div>
 												<?php if ($keteranganpro == "") { ?>
 													<div class="list_cont" style="display: none;">
@@ -254,10 +254,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 													</h3>
 													<ul>
 														<li>
-															Lite dapat 3 siswa ekskul gratis
+															Lite dapat 5 siswa ekskul gratis
 														</li>
 														<li>
-															Pro dapat 10 siswa ekskul gratis
+															Pro dapat 20 siswa ekskul gratis
 														</li>
 														<li>
 															Premium semua siswa ekskul gratis

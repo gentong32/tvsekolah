@@ -601,7 +601,7 @@ class M_channel extends CI_Model
 		// $this->db->join('daf_kelas dkl', 'dkl.id=dcs.idjenjang', 'left');
 		$this->db->join('daf_jenjang dj', 'dj.id=dcs.idjenjang', 'left');
 		$this->db->join('tb_user tu','dcs.npsn=tu.npsn AND verifikator=3','left');
-		$this->db->where('(dcs.status>=1)');
+		$this->db->where('(dcs.status>=0)');
 		$this->db->where('(dcs.idjenjang>=0)');
 		$this->db->group_by('dcs.npsn');
 		$this->db->order_by('dcs.strata_sekolah', 'desc');

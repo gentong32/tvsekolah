@@ -59,7 +59,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											" " . $thn_skr; ?></b>
 								</div>
 								<div>
-								<div class="small text-white"><ul style="margin-left:-20px;"><li>Membuat Event Calon Pengelola Channel (Verifikator) : 1 / <?=$mincalver?></li></ul></div>
+								<div class="small text-white"><ul style="margin-left:-20px;"><li>Membuat Event Calon Pengelola Channel (Verifikator) : <?=$jmlcalver?> / <?=$mincalver?></li></ul></div>
 								<button class="btn-oyen"
 								   onclick="window.open('<?php echo base_url(); ?>marketing/daftar_event_ver?dash=1','_self');">Buat Event
 								</button>
@@ -76,9 +76,9 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 											" " . $thn_skr; ?></b>
 								</div>
 								<div>
-								<div class="small text-white"><ul style="margin-left:-20px;"><li>Membuat Event Penyusunan Modul Kelas Virtual (Kontributor) : 1 / <?=$minmodul?></li></ul></div>
+								<div class="small text-white"><ul style="margin-left:-20px;"><li>Membuat Event Penyusunan Modul Kelas Virtual (Kontributor): <br> <?=$jmleventmodul?> / <?=$minmodul?></li></ul></div>
 								<button class="btn-oyen"
-								   href="<?php echo base_url(); ?>marketing/event_bulanan/">Buat Event
+								onclick="window.open('<?php echo base_url(); ?>marketing/daftar_event?dash=1','_self');">Buat Event
 								</button>
 								</div>
 							</div>
@@ -93,10 +93,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 								<b><?php echo nmbulan_pendek($bln_skr) .
 										" " . $thn_skr; ?></b>
 							</div>
-							<div class="small text-white"><ul style="margin-left:-20px;"><li>Membuat Event Sekolah Model : 1 / <?=$minsekolah?></li></ul></div>
-								<button class="btn-oyen"
-								   href="<?php echo base_url(); ?>marketing/event_bulanan/">Buat Event
-								</button>
+							<div class="small text-white"><ul style="margin-left:-20px;"><li>Membuat Event Sekolah Model :<br> 1 / <?=$minsekolah?></li></ul></div>
+								<!-- <button class="btn-oyen"
+								   onclik="window.open('<?php// echo base_url(); ?>marketing/event_bulanan/','_self')">Buat Event
+								</button> -->
 								</div>
 						</div>
 					</div>

@@ -552,6 +552,15 @@ class M_login extends CI_Model
 			$this->db->insert('daf_chn_sekolah', $data);
 	}
 
+	public function updatejenjangchnsekolah($npsn, $kodejenjang)
+	{
+		$data = array(
+			'idjenjang'=>$kodejenjang
+		);
+		$this->db->where('npsn', $npsn);
+		return $this->db->update('daf_chn_sekolah', $data);
+	}
+
 	public function updatekotapropinsi($data, $id)
 	{
 		$this->db->where('tb_user.id', $id);

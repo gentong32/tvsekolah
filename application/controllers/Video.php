@@ -514,7 +514,7 @@ class Video extends CI_Controller
 	public function daftarjurusan()
 	{
 		$idjenjang = $_GET['idjenjang'];
-		if ($idjenjang == 5)
+		if ($idjenjang == 15)
 			$isi = $this->M_video->dafJurusan();
 		else if ($idjenjang == 6)
 			$isi = $this->M_video->dafJurusanPT();
@@ -862,6 +862,9 @@ class Video extends CI_Controller
 		$statusverifikasi = $this->input->post('status_ver');
 
 		$data['status_verifikasi'] = 0;
+		
+		if ($this->session->userdata('a02'))
+		$data['status_verifikasi'] = 2;
 
 		if ($this->input->post('addedit') == "add") {
 			$data['id_user'] = $this->session->userdata('id_user');

@@ -3825,7 +3825,10 @@ class Event extends CI_Controller
 			$bulannya = $tglsekarang->format("n");
 			$tahunnya = $tglsekarang->format("Y");
 			$tanggalakhir = $tglsekarang->format("t");
+			$tglbatasawal = $tglsekarang->format("Y-m-01");
+			$tglbatasakhir = $tglsekarang->format("Y-m-t");
 			$tglsekarang = $tglsekarang->format('Y-m-d');
+			
 			
 			$data['bln_skr'] = $bulannya;
 			$data['thn_skr'] = $tahunnya;
@@ -3861,17 +3864,20 @@ class Event extends CI_Controller
 			}
 
 			
-
 			$this->load->model("M_marketing");
 			$cekbatasminimalevent = $this->M_marketing->getminimaleventmentor($idagency);
 			$daftarharian = $this->M_marketing->get_mentor_event_harian($idmentor,$tglsekarang);
 			$jmlshare = sizeof($daftarharian);
-			$daftareventcalverbulan = $this->M_marketing->getDafEventVer(null,$bulannya,$tahunnya);
+			$daftareventcalverbulan = $this->M_marketing->getDafEventVer(null,$tglbatasawal,$tglbatasakhir);
+			$daftareventmodul = $this->M_marketing->getDafEvent($bulannya, $tahunnya);
 			$jmlshare = sizeof($daftarharian);
+			$jmlcalver = sizeof($daftareventcalverbulan);
+			$jmleventmodul = sizeof($daftareventmodul);
 
 			$data['tglsekarang'] = namabulan_pendek($tglsekarang);
 			$data['jmlshare'] = $jmlshare;
 			$data['jmlcalver'] = $jmlcalver;
+			$data['jmleventmodul'] = $jmleventmodul;
 			$data['minshare'] = $cekbatasminimalevent->minimal_share;
 			$data['mincalver'] = $cekbatasminimalevent->minimal_calver;
 			$data['minmodul'] = $cekbatasminimalevent->minimal_modul;

@@ -51,7 +51,7 @@ class Ekskul extends CI_Controller
 		$data['jmlpeserta'] = $jmlpeserta;
 
 		$tanggalsekarang = $tglsekarang->format("Y-m-d");
-		$data['lunas'] = substr(namabulan_pendek($tanggalsekarang), 3) . " [belum bayar]";
+		$data['lunas'] = substr(namabulan_pendek($tanggalsekarang), 2) . " [belum bayar]";
 
 		//$bulannya="01";
 
@@ -158,6 +158,14 @@ class Ekskul extends CI_Controller
 			$id = $this->session->userdata('id_user');
 			$status = $this->cekstatus($dataekskul);
 
+			// echo var_dump($status);
+
+			
+
+			$cekdaftar = $this->M_ekskul->cekdaftar($id);
+			// echo var_dump($cekdaftar);
+			
+
 			if ($this->session->userdata('verifikator')==1)
 			{
 				$getuser = getstatususer();
@@ -165,16 +173,14 @@ class Ekskul extends CI_Controller
 				if ($referrer!="" && $referrer!=null)
 					$data ['konten'] = "ekskul_daftar";
 			}
-			else if ($jmlpeserta >= 3) {
+			else if ($cekdaftar!=null) {
 				$data ['konten'] = "ekskul_dashboard";
 			} else {
 				$data ['konten'] = "ekskul_daftar";
 			}
-
+			
 			$this->load->Model('M_payment');
 			$cekbayar = $this->M_payment->getlastpaymentekskul($id);
-			
-			// echo var_dump($cekbayar);
 
 			if ($cekbayar) {
 				$awalnyamulai = new DateTime($cekbayar->tgl_bayar);
@@ -217,11 +223,11 @@ class Ekskul extends CI_Controller
 					}
 
 				} else {
-					$data['lunas'] = "<b>" . substr(namabulan_pendek($tanggalsekarang), 3) . "</b> [belum bayar]";
+					$data['lunas'] = "<b>" . substr(namabulan_pendek($tanggalsekarang), 2) . "</b> [belum bayar]";
 				}
 
 				if ($dibayaroleh == "sekolah") {
-					$data['lunas'] = "<b>" . substr(namabulan_pendek($tanggalsekarang), 3) . "</b> [lunas]".
+					$data['lunas'] = "<b>" . substr(namabulan_pendek($tanggalsekarang), 2) . "</b> [lunas]".
 						"<br> Oleh Sekolah";
 				}
 			}
@@ -235,11 +241,16 @@ class Ekskul extends CI_Controller
 					else
 						$data['lunas'] = "<b>" . $ketbulantahun . "</b> [lunas]";
 				} else {
-					$data['lunas'] = "<b>" . substr(namabulan_pendek($tanggalsekarang), 3) . "</b> [belum bayar]";
+					$data['lunas'] = "<b>" . substr(namabulan_pendek($tanggalsekarang), 2) . "</b> [belum bayar]";
 				}
 
 				if ($dibayaroleh == "sekolah") {
-					$data['lunas'] = "<b>" . substr(namabulan_pendek($tanggalsekarang), 3) . "</b> [lunas]".
+					$data['lunas'] = "<b>" . substr(namabulan_pendek($tanggalsekarang), 2) . "</b> [lunas]".
+					"<br> Oleh Sekolah";
+				}
+
+				if ($dibayaroleh == "-") {
+					$data['lunas'] = "<b>" . substr(namabulan_pendek($tanggalsekarang), 2) . "</b> [belum dibayar]".
 					"<br> Oleh Sekolah";
 				}
 			}
@@ -273,7 +284,7 @@ class Ekskul extends CI_Controller
 		$data['jmlpembayar'] = $jmlpembayar;
 
 
-		if ($dibayaroleh == "sekolah") {
+		if ($dibayaroleh == "sekolah" || $dibayaroleh == "-") {
 			$data['keteranganpembayaran'] = "<br>Telah dibayarkan oleh sekolah";
 			$data['keteranganpeserta'] = "Terdapat " . $jmlpeserta . " siswa aktif";
 		} else if (substr($dibayaroleh, 0, 5) == "siswa") {
@@ -309,10 +320,11 @@ class Ekskul extends CI_Controller
 
 		$getbayarekskul = $this->M_payment->getbayarEkskul($this->session->userdata('npsn'), null, 3, true);
 
+		// echo ($this->session->userdata('npsn'));
 		// echo "<pre>";
 		// echo var_dump($getbayarekskul);
 		// echo "</pre>";
-//		die();
+		// die();
 
 		$jmlsiswabayar = 0;
 		$jmlverbayar = 0;
@@ -463,10 +475,10 @@ class Ekskul extends CI_Controller
 
 			$jmlbayar = count($databayar);
 			$cekbayarakhir = $this->cekbayarakhir($jmlbayar, $databayar);
-//			echo "<pre>";
-//			echo var_dump($cekbayarakhir);
-//			echo "</pre>";
-//			die();
+			// echo "<pre>";
+			// echo var_dump($cekbayarakhir);
+			// echo "</pre>";
+			// die();
 			if ($cekbayarakhir) {
 				$statusbayar = $cekbayarakhir->status;
 				$bayarakhir = $cekbayarakhir->tgl_bayar;
@@ -619,6 +631,12 @@ class Ekskul extends CI_Controller
 		$data = array();
 		$data['konten'] = "ekskul_video";
 		$data['status'] = $status;
+
+		////////////////////////////////////////
+		$cekdaftar = $this->M_ekskul->cekdaftar($id);
+		$ekskulgratis =  $cekdaftar->kode_bayar;
+		if ($ekskulgratis!=null)
+		$data['status'] = 2;
 		$data['asal'] = $asal;
 		$data['dibayaroleh'] = $dibayaroleh;
 		$data['jmlpembayar'] = $jmlpembayar;
@@ -779,6 +797,9 @@ class Ekskul extends CI_Controller
 		$this->M_ekskul->addEkskul($npsn, $id);
 		$cekekskul = $this->cekgratisekskul();
 
+		// echo $cekekskul['sisa_gratis'];
+		// die();
+
 		if ($cekekskul['sisa_gratis']>0) {
 			$kodeacak = "EKF-" . $id."_".$cekekskul['order_id'];
 			$this->load->Model('M_payment');
@@ -793,7 +814,7 @@ class Ekskul extends CI_Controller
 
 	private function cekgratisekskul()
 	{
-		$arraygratis = array("Lite"=>3, "Pro"=>10, "Premium"=>1000, "Lite Siswa"=>0);
+		$arraygratis = array("Lite"=>5, "Pro"=>20, "Premium"=>1000, "Lite Siswa"=>0);
 		$ceksekolahpremium = ceksekolahpremium();
 		$data['statussekolah'] = " [ - ]";
 		$sisagratis = 0;

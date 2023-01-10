@@ -470,4 +470,12 @@ class M_ekskul extends CI_Model
 		return $ret;
 	}
 
+	public function cekdaftar($iduser)
+	{
+		$this->db->from('tb_ekskul');
+		$this->db->where('id_user', $iduser);
+		$result = $this->db->get()->last_row();
+		return $result;
+	}
+	
 }

@@ -58,6 +58,11 @@ else
 					<input type="number" name="itahun" id="itahun" min="2021" max="<?php echo (date("Y"))+1;?>" value="<?php echo $tahun; ?>">
 					<button onclick="pilihbulan();">OK</button>
 				</center>
+				<?php if ($dash==1) { ?>
+					<div style="float:left;margin-bottom: 10px;">
+					<button type="button" class="btn-main" onclick="kembali();">Kembali</button>
+					</div>
+					<?php } ?>
 						<!-- <div style="float:left;margin-bottom: 10px;">
 					<button type="button" class="btn-main" onclick="kembali();">Kembali</button>
 				</div> -->
@@ -197,7 +202,7 @@ else
 	});
 
 	function kembali() {
-		window.history.back();
+		window.open("<?=base_url()?>event/mentor_dashboard","_self");
 	}
 
 	function periksa(linklist)
