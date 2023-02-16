@@ -77,7 +77,7 @@ class Payout extends CI_Controller
 		$curl = curl_init();
 
 		if (base_url() == "https://tutormedia.net/tvsekolahbaru/" || base_url() == "http://localhost/tvsekolah2/"
-			|| base_url() == "https://tvsekolah.id/" || $this->session->userdata('npsn') == "1234567890" || $this->session->userdata('npsn') == "1234567891") {
+			|| $this->session->userdata('npsn') == "1234567890" || $this->session->userdata('npsn') == "1234567891") {
 			curl_setopt_array($curl, array(
 				CURLOPT_URL => 'https://app.sandbox.midtrans.com/iris/api/v1/account_validation?bank=' .
 					$namabank . '&account=' . $accnumbner,
@@ -131,7 +131,7 @@ class Payout extends CI_Controller
 		$curl = curl_init();
 
 		if (base_url() == "https://tutormedia.net/tvsekolahbaru/" || base_url() == "http://localhost/tvsekolah2/"
-			|| base_url() == "https://tvsekolah.id/" || $this->session->userdata('npsn') == "1234567890" || $this->session->userdata('npsn') == "1234567891") {
+			|| $this->session->userdata('npsn') == "1234567890" || $this->session->userdata('npsn') == "1234567891") {
 			curl_setopt_array($curl, array(
 				CURLOPT_URL => 'https://app.sandbox.midtrans.com/iris/api/v1/account_validation?bank=' .
 					$namabank . '&account=' . $accnumbner,

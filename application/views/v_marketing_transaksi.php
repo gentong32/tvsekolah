@@ -117,7 +117,8 @@ foreach ($daftransaksi as $datane) {
 				$disabled = "";
 			}
 
-
+			//data bank payout midtrans
+			// https://docs.midtrans.com/reference/list-of-supported-banks
 			if ($getuserdata['rek'] == null) {
 				echo "<button id='btbank' onclick='tampilinputbank();' class='btn-primary'>Input Rekening</button>"; ?>
 				<div id="dinputbank" style="display: none">

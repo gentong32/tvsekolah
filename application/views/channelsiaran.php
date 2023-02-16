@@ -351,7 +351,7 @@ foreach ($dafchannelguru as $datane) {
 		// console.log("MENIT BARU:"+menitbaru);
 		// console.log("DETIK BARU:"+detikbaru);
 		jamjadwal = detikke[1].substring(0, 2);
-		console.log("Jam jadwal:" + jamjadwal);
+		//console.log("Jam jadwal:" + jamjadwal);
 		durasijam = parseInt(jambaru) * 3600 + parseInt(menitbaru) * 60 + parseInt(detikbaru);
 		durasijadwal = parseInt(jamjadwal) * 3600;
 		if (durasijam - durasijadwal >= totalseluruhdurasi) {
@@ -447,6 +447,7 @@ foreach ($dafchannelguru as $datane) {
 <script>
 	if (jamawal >= jammulaitayang) {
 		jambulatawal = parseInt(jamawal / jambulat) * jambulat + (jammulaitayang % jambulat);
+		jambulatawal = jammulaitayang;
 	} else {
 		jambulatawal = jammulaitayang;
 	}

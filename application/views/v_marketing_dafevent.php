@@ -153,7 +153,7 @@ else
 			"<button class='tbdaf' onclick='lihatvideo(`" . $id . "`);' data-video-id='" . $id . "' type='button'>Play</button>".
 			"<button class='tbdaf' onclick='window.open(`" . base_url()."virtualkelas/event/".
 			str_pad($bulan, 2, '0', STR_PAD_LEFT)."/".$tahun."/".$kodeevent . "`);' type='button'>CHAT</button>".
-			"<button class='tbdaf' onclick='salinteks(`" . $kodeevent . "`);' type='button'>Copy Link</button>".
+			"<button class='tbdaf' onclick='salinteks(`" . $kodeevent . "`);' type='button'>Copy Link</button>"."<button class='tbdaf' onclick='dafpeserta(`" . $kodeevent . "`);' type='button'>Peserta</button>".
 			"</center>";
 			
 
@@ -261,6 +261,11 @@ else
 		.catch(() => {
 			alert("ada masalah");
 		});
+	}
+
+	function dafpeserta(kodeevent) {
+		url = "<?php echo base_url().'marketing/daftar_user_event/';?>"+kodeevent;
+		window.open(url,'_self');
 	}
 
 	function jump(h) {

@@ -57,6 +57,7 @@ class M_channel extends CI_Model
 //			$this->db->where('tp.hari', $buattes);
 //		else
 		$this->db->where('tp.hari', $hari);
+		$this->db->where('tp.durasi_paket>=', '01:30:00');
 		$this->db->where('(status_paket>0)');
 		$this->db->where('(ds.npsn<>"10000010" AND ds.npsn<>"10000002")');
 		$this->db->order_by('ds.modified', 'desc');
@@ -66,24 +67,37 @@ class M_channel extends CI_Model
 		return $result;
 	}
 
-	public function getAllSekolah()
+	public function getAllSekolah($opsi=null)
 	{
 		$now = new DateTime();
 		$now->setTimezone(new DateTimezone('Asia/Jakarta'));
 		$hari = $now->format('N');
+		$tglskr = $now->format('Y-m-d H:i:s');
 
 		$this->db->select('IF(tp.hari='.$hari.',"ada","zonk") as cekhari,ds.*,tp.*');
 		$this->db->from('daf_chn_sekolah ds');
 		$this->db->join('tb_paket_channel_sekolah tp', 'ds.npsn = tp.npsn', 'left');
 
 		$this->db->where('status', 1);
+		$this->db->where('kadaluwarsa>=', $tglskr);
+		
 		$this->db->group_by("tp.npsn, cekhari");
 
 		//$this->db->where('(status_paket>0)');
 		$this->db->where('(ds.npsn<>"10000010" AND ds.npsn<>"10000002")');
-		//$this->db->where('tp.hari', $hari);
-		$this->db->order_by('cekhari', 'asc');
-		$this->db->order_by('status_paket', 'desc');
+		$this->db->where('tp.hari', $hari);
+		$this->db->where('tp.durasi_paket>=', '01:30:00');
+
+		if ($opsi=="home")
+		{
+			$this->db->order_by('durasi_paket', 'desc');
+			$this->db->limit(10, 0);
+		}
+		else
+		{
+			$this->db->order_by('cekhari', 'asc');
+			$this->db->order_by('status_paket', 'desc');
+		}
 
 		$result = $this->db->get()->result();
 		return $result;
@@ -93,7 +107,7 @@ class M_channel extends CI_Model
 	{
 		$this->db->from('daf_chn_sekolah');
 		$this->db->where('status>=', 0);
-		$this->db->where('(npsn=' . $npsn . ')');
+		$this->db->where('npsn',$npsn);
 		$this->db->order_by('created', 'desc');
 		$result = $this->db->get()->result();
 		return $result;

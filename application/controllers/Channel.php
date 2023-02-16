@@ -62,23 +62,29 @@ class Channel extends CI_Controller
 		if ($npsn == "000")
 			$npsn = "10101010101";
 		$data['channelku'] = $this->M_channel->getSekolahKu($npsn);
-		$data['dafchannel'] = $this->M_channel->getSekolahLain($npsn, "");
+		// $data['dafchannel'] = $this->M_channel->getSekolahLain($npsn, "");
+		$data['dafchannel'] = $this->M_channel->getAllSekolah("home");
+
+		// echo "<pre>";
+		// echo var_dump($data['dafchannel']);
+		// echo "</pre>";
+		// die();
 
 		//unset($data['dafchannel'][0]);
 
-		$indeks = 0;
-		$batas10 = 0;
-		foreach ($data['dafchannel'] as $row) {
-			if ($this->cekstatusbayarchannel($row->npsn) == "off") {
-				unset($data['dafchannel'][$indeks]);
-			} else {
-				$batas10++;
-			}
-			$indeks++;
-			if ($batas10 > 9)
-				unset($data['dafchannel'][$indeks]);
-//			echo $row->npsn."==".$this->cekstatusbayarchannel($row->npsn)."<br>";
-		}
+// 		$indeks = 0;
+// 		$batas10 = 0;
+// 		foreach ($data['dafchannel'] as $row) {
+// 			if ($this->cekstatusbayarchannel($row->npsn) == "off") {
+// 				unset($data['dafchannel'][$indeks]);
+// 			} else {
+// 				$batas10++;
+// 			}
+// 			$indeks++;
+// 			if ($batas10 > 9)
+// 				unset($data['dafchannel'][$indeks]);
+// //			echo $row->npsn."==".$this->cekstatusbayarchannel($row->npsn)."<br>";
+// 		}
 
 		$getpilihansiaran = $this->M_channel->getsiaranaktif($npsn);
 		$data['siaranaktif'] = $getpilihansiaran->siaranaktif;
@@ -121,18 +127,26 @@ class Channel extends CI_Controller
 				}
 
 			
-
-			// echo $npsn;
-			// echo $data['siaranaktif'];
-			// die();
-
 			if ($this->session->userdata('a02'))
 				$cekuser = 2;
 			else
 				$cekuser = 2;
 
+			if (($this->session->userdata('npsn')==$npsn && ($this->session->userdata('verifikator')==3||$this->session->userdata('verifikator')==1)) || $statussekolah!="non") 
+			{
+				$data['konten'] = "v_channel_sekolah";
+			}
+			else
+			{
+				$data['konten'] = "v_channel_sekolah_off";
+			}
+			// echo $npsn."-";
+			// echo $statussekolah."-";
+			// echo $data['siaranaktif'];
 			
-			$data['konten'] = "v_channel_sekolah";
+
+
+			
 
 			$now = new DateTime();
 			$now->setTimezone(new DateTimezone('Asia/Jakarta'));
@@ -218,7 +232,7 @@ class Channel extends CI_Controller
 
 			$this->load->view('layout/wrapper_umum', $data);
 		} else {
-
+			
 			$data = array();
 			$data['konten'] = "v_channel_all_sekolah";
 
@@ -226,19 +240,29 @@ class Channel extends CI_Controller
 			if ($this->session->userdata('loggedIn') && !$this->session->userdata('a01')) {
 				$npsn = $this->session->userdata('npsn');
 
+				
 				if ($npsn == "000")
-					$npsn = "10101010101";
-				else $npsn = "0";
+				$npsn = "10101010101";
+				// else $npsn = "0";
+				
+				// echo "<br>NPSN:".$npsn;
 				$data['channelku'] = $this->M_channel->getSekolahKu($npsn);
 				$data['dafchannel'] = $this->M_channel->getSekolahLain($npsn, "all");
 			} else {
 				$data['dafchannel'] = $this->M_channel->getAllSekolah();
+				// echo var_dump($data['dafchannel']);
+				// die();
 			}
 
-//			echo "<pre>";
-//			echo var_dump($data['dafchannel']);
-//			echo "</pre>";
-//			die();
+			
+
+			// foreach ($data['dafchannel'] as $row)
+			// {
+			// 	if ($row->durasi_paket >= '01:30:00')
+			// 	{
+			// 		echo "DURASI:".$row->durasi_paket.":".$row->hari."cek_hari:".$row->cekhari."<br>";
+			// 	}
+			// }
 
 			$datakosong = array();
 
@@ -3685,16 +3709,16 @@ class Channel extends CI_Controller
 					echo '<div class="row">
 			<table style="font-size:14px;background-color: #f6fff7; text-align:right;float:right;margin-top:0px;margin-bottom:0px;max-width:100%;border: #5faabd 0.5px dashed;vertical-align: center;padding: 15px;">
 			<tr>
-			<td style="font-size:14px;padding:5px;padding-bottom: 0px;">' . $datane->pesan . '<br><span style="font-size: 10px;">'.substr($datane->tanggal, 11, 5).
+			<td style="word-wrap: break-word;font-size:14px;padding:5px;padding-bottom: 0px;">' . $datane->pesan . '<br><span style="font-size: 10px;">'.substr($datane->tanggal, 11, 5).
 						'</span></td>
 			
 			</tr>
 			</table>
 			</div>';
 				} else {
-					echo '<div class="row">
+					echo '<div class="">
 								<table
-									style="font-size:14px;float:left;max-width:100%;border: #5faabd 0.5px dashed;vertical-align: center;padding: 15px;">
+									style="table-layout: fixed;width:200%; font-size:14px;float:left;border: #5faabd 0.5px dashed;vertical-align: center;padding: 15px;">
 									<tr>
 										<td style="font-size:14px;font-weight:bold;padding:5px;padding-bottom: 0px;">' .
 						$datane->first_name . " " . $datane->last_name . '</td>
@@ -3702,7 +3726,7 @@ class Channel extends CI_Controller
 										</td>
 									</tr>
 									<tr>
-										<td style="font-size:14px;padding:5px;padding-top: 0px;">' .
+										<td style="word-wrap: break-word;font-size:14px;padding:5px;padding-top: 0px;">' .
 						$datane->pesan . '<br><span style="font-size: 10px;">'.substr($datane->tanggal, 11, 5).
 						'</span></td>
 										

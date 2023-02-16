@@ -990,7 +990,7 @@ if (!isset($sudahdicekagency))
 			method: "POST",
 			data: {id: idx, status: statusnya},
 			success: function (result) {
-				alert(result.substr(0,1));
+				// alert(result.substr(0,1));
 				if (result == "jangan")
 					alert("Sudah dipakai di bagian lain");
 				else {

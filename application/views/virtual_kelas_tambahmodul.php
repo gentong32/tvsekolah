@@ -186,8 +186,8 @@ if (!isset($tahun))
 
 								<div class="form-group maks360" id="djurusan">
 									<?php
-									if ($addedit == "edit" && ($jenjangini == 5 ||
-											$jenjangini == 6)) { ?>
+									if ($addedit == "edit" && ($jenjangini == 6 ||
+											$jenjangini == 15)) { ?>
 										<br>
 										<label for="select" class="col-md-12 control-label">Jurusan</label>
 										<div class="col-md-12">

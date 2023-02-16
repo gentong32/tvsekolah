@@ -160,8 +160,8 @@ class Profil extends CI_Controller
 		$datacalonverifikator = $this->M_eksekusi->getcalonveraktif($npsn, $referrer);
 
 		// echo "<br><br><br><br><br><pre>";
-		// echo $npsn;
-		// echo var_dump ($dataverifikator);
+		// echo $npsn.", ref:".$referrer."<br>";
+		// echo var_dump ($datacalonverifikator);
 		// die();
 		// echo "</pre>";
 		// echo $dataverifikator->npsn;

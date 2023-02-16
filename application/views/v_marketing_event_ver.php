@@ -396,21 +396,21 @@ foreach ($daftaragensi as $row) {
 									<label for="inputDefault" class="col-md-12 control-label">MENGUNDANG KONTRIBUTOR
 												</label>
 											<div style="max-width: 200px;margin:auto">
-												<input type="number" name="ijmlkontri" id="ijmlkontri" min="1" max="10" value="<?php echo $jmlkontri; ?>">
+												<input type="number" name="ijmlkontri" id="ijmlkontri" min="0" max="10" value="<?php echo $jmlkontri; ?>">
 											</div>	
 									</div>
 									<div class="form-group">
 									<label for="inputDefault" class="col-md-12 control-label">VIDEO KONTRIBUTOR
 												</label>
 											<div style="max-width: 200px;margin:auto">
-												<input type="number" name="ijmlvideokontri" id="ijmlvideokontri" min="1" max="10" value="<?php echo $jmlvideokontri; ?>">
+												<input type="number" name="ijmlvideokontri" id="ijmlvideokontri" min="0" max="10" value="<?php echo $jmlvideokontri; ?>">
 											</div>	
 									</div>
 									<div class="form-group">
 									<label for="inputDefault" class="col-md-12 control-label">MENGAJAK SISWA EKSKUL
 												</label>
 											<div style="max-width: 200px;margin:auto">
-												<input type="number" name="ijmlekskul" id="ijmlekskul" min="1" max="10" value="<?php echo $jmlekskul; ?>">
+												<input type="number" name="ijmlekskul" id="ijmlekskul" min="0" max="10" value="<?php echo $jmlekskul; ?>">
 											</div>	
 									</div>
 									</center>

@@ -172,14 +172,13 @@ class Virtualkelas extends CI_Controller
 			$jmlmapelaktif = sizeof($mapelaktif);
 			$data['jmlmapelaktif'] = $jmlmapelaktif;
 
-			// echo $jmlmodulbulanini;
-			// echo "-".$data['jmlgurupilih'];
-			// echo "-".$jmlmapelaktif;
-
-
 			$data['modullengkap'] = false;
 			if ($jmlmodulbulanini == $jmlmapelaktif * 4)
 				$data['modullengkap'] = true;
+
+			// echo $jmlmodulbulanini;
+			// echo "-".$data['jmlgurupilih'];
+			// echo "-".$jmlmapelaktif;
 
 			// $data['modullengkap'] = true;
 
@@ -357,11 +356,11 @@ class Virtualkelas extends CI_Controller
 		{
 			$refmentor = $statususer['referrer'];
 			$cekkodeeventmodul = $this->M_vksekolah->cekKodeEventModul($refmentor, $npsn);
-			// echo var_dump($cekkodeeventmodul);
-			// die();
-			if ($cekkodeeventmodul!="kosong")
+			
+			$referrer = $cekkodeeventmodul->kode_referal;
+			if ($cekkodeeventmodul!="kosong" && $referrer!=null)
 			{
-				$referrer = $cekkodeeventmodul->kode_referal;
+				
 				$this->M_vksekolah->updateKodeEventModul($referrer);
 			}
 			else
@@ -375,9 +374,7 @@ class Virtualkelas extends CI_Controller
 			else
 				$kodeeventmentor = "-";
 		}
-
-		// echo var_dump($cekkodeeventmentor);
-		// die();
+		
 
 		$kodeeventsaya = "kosong";
 		$nama_sertifikat = "";
@@ -385,6 +382,12 @@ class Virtualkelas extends CI_Controller
 		$download_sertifikat = 0;
 		$cekkodeeventsaya = $this->M_vksekolah->cekKodeEventSaya($iduser, $bulanevent, $tahunevent);
 		$cekkodeeventsekolah = $this->M_vksekolah->cekKodeEventSekolahSaya($npsn);
+
+		if ($cekkodeeventsaya=="kosong" && $kodeeventmentor!="-")
+			{
+				$dataadd = array('id_guru'=>$iduser,'bulan'=>$bulanevent,'tahun'=>$tahunevent,'kode_event'=>$kodeeventmentor);
+				$this->M_vksekolah->addKodeEventSaya($dataadd);
+			}
 
 		if ($cekkodeeventsaya!="kosong")
 			{
@@ -395,13 +398,16 @@ class Virtualkelas extends CI_Controller
 			}
 			else
 			{
+				// echo "CA1";
 				if ($cekkodeeventsekolah!="kosong")
 				{
+					// echo "CA2";
 					$kode=$cekkodeeventsekolah->kode_referal;
 					$this->M_vksekolah->updatekodeeventmentor($iduser, $kode);
 					$cekkodeeventsaya = $this->M_vksekolah->cekKodeEventSaya($iduser, $bulanevent, $tahunevent);
 					
 				}
+				
 			}
 		
 		$data = array();
@@ -452,9 +458,16 @@ class Virtualkelas extends CI_Controller
 			else if ($kodeevent!=null AND ($kodeevent == $kodeeventmentor))
 			{
 				$lanjutkan = true;
-				$dataadd = array('id_guru'=>$iduser,'bulan'=>$bulanevent,'tahun'=>$tahunevent,'kode_event'=>$kodeeventmentor);
+				$dataadd = array('id_guru'=>$iduser,'bulan'=>$data['bulanevent0'],'tahun'=>$data['tahunevent0'],'kode_event'=>$kodeeventmentor);
+				// echo "CO123";
+				// // echo var_dump($cekkodeeventsaya);
+				// die();
 				$this->M_vksekolah->addKodeEventSaya($dataadd);
 			}
+
+			// echo "CO124";
+			// echo var_dump($cekkodeeventsaya);
+			// die();
 
 
 			if ($cekkodeeventsaya!="kosong")
@@ -475,10 +488,14 @@ class Virtualkelas extends CI_Controller
 			else if ($kodeevent!=null AND ($kodeevent == $kodeeventmentor))
 			{
 				$lanjutkan = true;
-				$dataadd = array('id_guru'=>$iduser,'bulan'=>$bulanevent,'tahun'=>$tahunevent,'kode_event'=>$kodeeventmentor);
+				$dataadd = array('id_guru'=>$iduser,'bulan'=>$data['bulanevent0'],'tahun'=>$data['tahunevent0'],'kode_event'=>$kodeeventmentor);
 				$this->M_vksekolah->addKodeEventSaya($dataadd);
 			}
+			
+			// echo "C111:".$kodeeventmentor;
+			// die();
 
+			
 			
 
 			// echo "<pre>";
@@ -1292,6 +1309,8 @@ class Virtualkelas extends CI_Controller
 			$cekmoduluser = $this->M_vksekolah->cekModulPilihan($id_user);
 			$jmlmapelpilihan = count($cekmoduluser);
 
+			
+
 			if ($jmlmapelpilihan == $jmlmapel) {
 				$this->modul_siswa($linklist, $opsi);
 			} else {
@@ -1350,9 +1369,13 @@ class Virtualkelas extends CI_Controller
 		// die();
 
 		$cekmodulsaya = $this->M_vksekolah->getModulSaya($linklist);
+
+		// echo var_dump($cekmodulsaya);
+		// die();
+
 		if ($cekmodulsaya)
 		{
-			$stratamodul = substr($kodepaket,4,1);
+			$stratamodul = substr($linklist,4,1);
 			if ($stratamodul==1)
 				$data['ambilpaket'] = "Lite";
 			else if ($stratamodul==2)
@@ -1366,7 +1389,6 @@ class Virtualkelas extends CI_Controller
 
 		
 
-		//echo var_dump($cekmodulsaya);
 		
 
 		
@@ -1843,7 +1865,7 @@ class Virtualkelas extends CI_Controller
 		$data = array();
 		$data['nama_paket'] = $_POST['ipaket'];
 		$data['id_jenjang'] = $_POST['ijenjang'];
-		if ($data['id_jenjang'] == 5 || $data['id_jenjang'] == 6)
+		if ($data['id_jenjang'] == 6 || $data['id_jenjang'] == 15)
 			$data['id_jurusan'] = $_POST['ijurusan'];
 		else
 			$data['id_jurusan'] = 0;

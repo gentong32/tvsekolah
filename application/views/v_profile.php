@@ -771,7 +771,7 @@ else if ($opsiuser=="kelasuser")
 										<select <?php echo $disabledawal; ?> class="form-control" name="ijenjangsekolah" id="ijenjangsekolah">
 											<option <?=$pilsel[0]?> value="0">-- Pilih --</option>
 											<option <?=$pilsel[3]?> value="3">PAUD</option>
-											<option <?=$pilsel[5]?> value="5">TK</option>
+											<!-- <option <?=$pilsel[5]?> value="5">TK</option> -->
 											<option <?=$pilsel[8]?> value="8">SD/MI</option>
 											<option <?=$pilsel[11]?> value="11">SMP/MTs</option>
 											<option <?=$pilsel[14]?> value="14">SMA/MA</option>

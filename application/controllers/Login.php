@@ -499,6 +499,15 @@ class Login extends CI_Controller
 			$data['addedit'] = "add";
 			//$data['captchaImg'] = '<img src="' . base_url() . 'captcha_images/1579143070.8609.jpg' . '" height="50" width="150">';
 			$data['jabatan'] = ucfirst($sebagai);
+			$this->load->model("M_marketing");
+			$cekdarievent = $this->M_marketing->cekdarievent($referal);
+			if ($cekdarievent)
+				{
+					if ($cekdarievent->jenis_event == 1)
+					{
+						$data['referrer_event'] = $referal;
+					}
+				}
 			$data['referrer'] = $referal;
 			$data['npsn'] = $npsn;
 			$data['message'] = $this->session->flashdata('message');
@@ -674,7 +683,7 @@ class Login extends CI_Controller
 	public function resetpassword()
 	{
 		if ($this->session->userdata('a01') || ($this->session->userdata('sebagai') == 1
-				&& $this->session->userdata('verifikator') == 3)) {
+				&& ($this->session->userdata('verifikator') == 1 || $this->session->userdata('verifikator') == 3))) {
 			$iduser = $this->input->get('iduser');
 			$this->load->model('M_login');
 			$this->M_login->resetpassword($iduser);
@@ -812,6 +821,9 @@ class Login extends CI_Controller
 			else if ($jabatan == "Siswa")
 				$this->M_marketing->updateCalVerDafUser("siswa", $idcalver);
 		}
+
+		// echo "CODE BLUE 001 JABATAN:".$jabatan;
+		// die();
 
 		$this->session->set_userdata('sebagai', $data['sebagai']);
 

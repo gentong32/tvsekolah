@@ -994,6 +994,17 @@ class Marketing extends CI_Controller
 		$this->load->view('layout/wrapper_tabel', $data);
 	}
 
-	
+	public function daftar_user_event($kodeevent)
+	{
+		$data = array();
+		$data['konten'] = 'v_vk_dafuserevent.php';
+
+		$this->load->model("M_vksekolah");
+		$getNamaEvent= $this->M_vksekolah->getNamaEvent($kodeevent);
+		$data['nama_sekolah'] = $getNamaEvent['nama_sekolah'];
+		$data['dafuser'] = $this->M_vksekolah->getDafUserEvent($kodeevent);
+//
+		$this->load->view('layout/wrapper_tabel', $data);
+	}
 
 }

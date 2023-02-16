@@ -337,6 +337,10 @@ if ($punyalist) {
 
 <?php if ($punyalist)
 	$hitungdurasi = substr($durasidaf[1], 0, 2) * 3600 + substr($durasidaf[1], 3, 2) * 60 + substr($durasidaf[1], 6, 2);
+	else
+	$hitungdurasi = 0;
+
+	$hitungdurasi = $hitungdurasi + 15 + $durasisponsor;
 ?>
 
 <!--<script src="--><?php //echo base_url() ?><!--js/jquery-3.4.1.js"></script>-->
@@ -354,6 +358,7 @@ if ($punyalist) {
 	var durasidetik = new Array();
 	var judulacara = new Array();
 	var tgl, bln, thn, jam, menit, detik, jmmndt;
+	var totalseluruhdurasi = 0;
 	var siaranaktif = <?php echo $siaranaktif;?>;
 
 	var jammulaitayang =<?php echo substr($tgl_tayang[1], 0, 2);?>;
@@ -541,13 +546,14 @@ if ($punyalist) {
 <script>
 
 	if (jamawal >= jammulaitayang) {
-		jambulatawal = parseInt(jamawal / jambulat) * jambulat + (jammulaitayang % jambulat);
+		//jambulatawal = parseInt(jamawal / jambulat) * jambulat + (jammulaitayang % jambulat);
+		jambulatawal = (parseInt((jamawal-jammulaitayang)/jambulat)*jambulat)+jammulaitayang;
 	} else {
 		jambulatawal = jammulaitayang;
 	}
 	sisadetikawal = totaldetikawal - jambulatawal * 3600;
 
-	//alert(sisadetikawal);
+	// alert(jamawal);
 
 	if (sisadetikawal > durasipaket) {
 		// console.log("IKLAN DULU BELUM MULAI");

@@ -362,7 +362,7 @@ $hitungdurasi = $hitungdurasi + 15 + $durasisponsor;
 		// console.log("MENIT BARU:"+menitbaru);
 		// console.log("DETIK BARU:"+detikbaru);
 		jamjadwal = detikke[1].substring(0, 2);
-		console.log("Jam jadwal:" + jamjadwal);
+		// console.log("Jam jadwal:" + jamjadwal);
 		durasijam = parseInt(jambaru) * 3600 + parseInt(menitbaru) * 60 + parseInt(detikbaru);
 		durasijadwal = parseInt(jamjadwal) * 3600;
 		if (durasijam - durasijadwal >= totalseluruhdurasi) {
@@ -450,7 +450,7 @@ $hitungdurasi = $hitungdurasi + 15 + $durasisponsor;
 			// console.log('Id ke ' + q + ' = ' + idvideo[q]);
 			// console.log('Durasi ke ' + q + ' = ' + durasike[q]);
 			// console.log('Total durasi ke ' + q + ' = ' + totaldurasi[q]);
-			console.log('Tayang jam 1 = ' + detikke[1]);
+			// console.log('Tayang jam 1 = ' + detikke[1]);
 			<?php if ($url_sponsor != ""){?>
 			if (q > 1) {
 				if (q == 2) {
@@ -474,7 +474,8 @@ $hitungdurasi = $hitungdurasi + 15 + $durasisponsor;
 
 <script>
 	if (jamawal >= jammulaitayang) {
-		jambulatawal = parseInt(jamawal / jambulat) * jambulat + (jammulaitayang % jambulat);
+		// jambulatawal = parseInt(jamawal / jambulat) * jambulat + (jammulaitayang % jambulat);
+		jambulatawal = (parseInt((jamawal-jammulaitayang)/jambulat)*jambulat)+jammulaitayang;
 	} else {
 		jambulatawal = jammulaitayang;
 	}
@@ -622,6 +623,7 @@ $hitungdurasi = $hitungdurasi + 15 + $durasisponsor;
 			width: 600,
 			height: 400,
 			videoId: idvideo[posisijudul],
+			host: 'http://www.youtube.com',
 			showinfo: 0,
 			controls: 0,
 			autoplay: 0,

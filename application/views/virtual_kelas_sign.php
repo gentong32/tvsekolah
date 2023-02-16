@@ -49,6 +49,26 @@
 							<div class="video__item_extra">
 								<div class="video__item_buttons">
 									<p>Untuk memanfaatkan fitur ini anda harus login terlebih dahulu</p>
+									<button onclick="location.href='<?php echo base_url();?>login'">Login</button>
+								</div>
+							</div>
+							<div>
+								<a href="<?php echo base_url();?>virtualkelas/sekolah_lain/">
+								<img src="<?php echo base_url();?>images/fitur/sekolah-lain.jpg" class="lazy video__item_preview" alt="" style="cursor: pointer">
+								</a>
+							</div>
+						</div>
+						<div class="video__item_info">
+							<a>
+								<h3 align="center">Sekolah Lain</h3>
+							</a>
+						</div>
+					</div>
+					<div class="video__item style-2" style="max-width:300px;">
+						<div class="video__item_wrap">
+							<div class="video__item_extra">
+								<div class="video__item_buttons">
+									<p>Untuk memanfaatkan fitur ini anda harus login terlebih dahulu</p>
 									<button onclick="location.href='login.html'">Login</button>
 								</div>
 							</div>

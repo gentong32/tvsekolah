@@ -1438,6 +1438,7 @@ class M_vksekolah extends CI_Model {
 		}
 		return $result2;
 	}
+	
 
 	public function updateKodeEventModul($koderefevent)
 	{
@@ -1482,6 +1483,27 @@ class M_vksekolah extends CI_Model {
 		$this->db->where('urutan_nomor>0');
 		$this->db->order_by('urutan_nomor','asc');
 		$result = $this->db->get()->row();
+		return $result;
+	}
+
+	public function getNamaEvent($kode)
+	{
+		$this->db->from('tb_mentor_event te');
+		$this->db->join('tb_marketing tm', 'tm.kode_referal = te.kode_referal', 'left');
+		$this->db->join('daf_chn_sekolah ds', 'ds.npsn = tm.npsn_sekolah', 'left');
+		$this->db->where('kode_event',$kode);
+		$result = $this->db->get()->row_array();
+		return $result;
+	}
+
+	public function getDafUserEvent($kode)
+	{
+		$this->db->select('tu.*');
+		$this->db->from('tb_user tu');
+		$this->db->join('tb_modul_bulanan tm', 'tm.id_guru = tu.id', 'left');
+		$this->db->where('kode_event', $kode);
+		
+		$result = $this->db->get()->result();
 		return $result;
 	}
 	

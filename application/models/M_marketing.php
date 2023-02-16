@@ -742,5 +742,14 @@ class M_marketing extends CI_Model
 		
 		return $result;
 	}
+
+	public function cekdarievent($koderef)
+	{
+		$this->db->from('tb_marketing');
+		$this->db->where('kode_referal', $koderef);
+		$result = $this->db->get()->row();
+		
+		return $result;
+	}
 	
 }

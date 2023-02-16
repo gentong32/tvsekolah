@@ -1600,17 +1600,19 @@ if ($addedit == "add") {
 					oke1 = 0;
 				}
 
-			if (jenjang.value == 1) {
+			if (jenjang.value == 5) {
 				if (pilmapel.value == 0)
 					{
 						oke1 = 0;
 					}
-			} else if (jenjang.value == 2) {
+			} else if (jenjang.value == 6) {
+				
+			} else if (jenjang.value == 8) {
 				if (pilkelas.value == 0 || piltema.value == 0 || pilmapel.value == 0)
 					{
 						oke1 = 0;
 					}
-			} else if (jenjang.value >= 3 && jenjang.value <= 5) {
+			} else if (jenjang.value >= 11 && jenjang.value <= 15) {
 				if (pilkelas.value == 0 || pilmapel.value == 0)
 					{
 						oke1 = 0;

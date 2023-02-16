@@ -209,10 +209,11 @@ foreach ($playlist as $datane) {
 								<div class="infomodul">
 									<?php if ($uraianmateri != "") { ?>
 										<div style="color:black;">
-											<button style="font-weight:bold;height:30px;width:100%;margin-top:0px;
-			margin-bottom:10px;border: #5faabd 1px solid ;background-color: #c5fbd7"
+										<center>
+											<button class="btn-materi" 
 													onclick="bukamateri();">URAIAN MATERI
 											</button>
+										</center>
 										</div>
 										<div style="color:black;">
 											<table border="0" width="100%"
@@ -236,10 +237,11 @@ foreach ($playlist as $datane) {
 								<div class="infomodul">
 									<?php if ($statussoal == 1) { ?>
 										<div style="color:black;">
-											<button style="font-weight:bold;height:30px;width:100%;margin-top:0px;
-			margin-bottom:10px;border: #5faabd 1px solid ;background-color: #c5fbd7"
+											<center>
+											<button class="btn-materi" 
 													onclick="kerjakansoal();">SOAL
 											</button>
+											</center>
 										</div>
 										<div style="color:black;">
 											<table border="0" width="100%"
@@ -265,12 +267,14 @@ foreach ($playlist as $datane) {
 								<div class="infomodul">
 									<?php if ($uraiantugas != "") { ?>
 										<div style="color:black;">
-											<button style="font-weight:bold;height:30px;width:100%;margin-top:0px;
-			margin-bottom:10px;border: #5faabd 1px solid ;background-color: #c5fbd7"
-													<?php if($ambilpaket!="Lite")
+											<center>
+											<button class="btn-materi"
+											<?php if($ambilpaket!="Lite")
 													{ ?> onclick="bukatugas();" <?php } ?>>TUGAS <?php
 													if ($ambilpaket=="Lite") {?>[Pro keatas]<?php } ?>
 											</button>
+											</center>
+											
 										</div>
 										<div style="color:black;">
 											<table border="0" width="100%"

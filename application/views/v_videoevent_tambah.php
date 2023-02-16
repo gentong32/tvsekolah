@@ -1291,22 +1291,29 @@ if ($addedit == "add") {
 
         if (jenis.value == "1") {
 
-            if (jenjang.value==0)
-                oke1 = 0;
-            //alert ("s1");
-            if (jenjang.value==1)
-            {
-                if (ki1.value==0 || kd1_1.value==0)
-                    oke1 = 0;
-            } else if (jenjang.value==2)
-            {
-                if (pilkelas.value==0 || piltema.value==0 || pilmapel.value==0 || ki1.value==0 || kd1_1.value==0)
-                    oke1 = 0;
-            } else if (jenjang.value>=3 && jenjang.value<=5)
-            {
-                if (pilkelas.value==0 || pilmapel.value==0 || ki1.value==0 || kd1_1.value==0)
-                    oke1 = 0;
-            }
+            if (jenjang.value == 0)
+				{
+					oke1 = 0;
+				}
+
+			if (jenjang.value == 5) {
+				if (pilmapel.value == 0)
+					{
+						oke1 = 0;
+					}
+			} else if (jenjang.value == 6) {
+				
+			} else if (jenjang.value == 8) {
+				if (pilkelas.value == 0 || piltema.value == 0 || pilmapel.value == 0)
+					{
+						oke1 = 0;
+					}
+			} else if (jenjang.value >= 11 && jenjang.value <= 15) {
+				if (pilkelas.value == 0 || pilmapel.value == 0)
+					{
+						oke1 = 0;
+					}
+			}
             // if ($('#ijenjang').val() == 0 || $('#ikelas').val() == 0 || $('#imapel').val() == 0
             //     || $('#iki1').val() == 0 || $('#ikd1_1').val() == 0 || $('#ilink').val() == "") {
             //     oke1 = 0;

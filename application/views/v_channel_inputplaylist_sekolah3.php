@@ -682,6 +682,7 @@ if ($jml_video == 0) { ?>
 				document.getElementById("video-placeholder").style.display = 'block';
 				player.cueVideoById(url);
 				player.playVideo();
+				jump('video-placeholder');
 			} else {
 				if ((oldurl == url) && (document.getElementById("video-placeholder").style.display == 'block')) {
 					document.getElementById("video-placeholder").style.display = 'none';
@@ -690,6 +691,7 @@ if ($jml_video == 0) { ?>
 					document.getElementById("video-placeholder").style.display = 'block';
 					player.cueVideoById(url);
 					player.playVideo();
+					jump('video-placeholder');
 				}
 			}
 			oldurl = url;
@@ -779,6 +781,11 @@ if ($jml_video == 0) { ?>
 			})
 
 
+		}
+
+		function jump(h) {
+			var top = document.getElementById(h).offsetTop;
+			window.scrollTo(0, top - 100);
 		}
 
 	</script>

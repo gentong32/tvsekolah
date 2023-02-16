@@ -442,7 +442,7 @@ class M_eksekusi extends CI_Model
 		$this->db->where('npsn', $npsn);
 		$this->db->where('sebagai', 1);
 		$this->db->where('verifikator>', 0);
-		$this->db->where('referrer', $referrer);
+		$this->db->where('referrer_calver', $referrer);
 		$result = $this->db->get()->last_row();
 		return $result;
 	}

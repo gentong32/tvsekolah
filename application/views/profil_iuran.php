@@ -73,8 +73,10 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 										</div>
 									</div>
 								</div>
-							<?php } else { ?>
-								<?php if ($status_verifikator != "oke") { ?>
+							<?php } else { 
+								
+								?>
+								<?php if ($status_verifikator != "oke" || ($keteranganbayar=="Masuk Masa Tenggang")) { ?>
 									<div class="col-md-6 margin_bottom_30">
 										<div class="dash_blog">
 											<div class="dash_blog_inner">
