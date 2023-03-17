@@ -37,7 +37,7 @@
 	<link href="<?php echo base_url();?>css/owl.transitions.css" rel="stylesheet" type="text/css" />
 	<link href="<?php echo base_url();?>css/magnific-popup.css" rel="stylesheet" type="text/css" />
 	<link href="<?php echo base_url();?>css/jquery.countdown.css" rel="stylesheet" type="text/css" />
-	<link href="<?php echo base_url();?>css/style.css?ver=4.1" rel="stylesheet" type="text/css" />
+	<link href="<?php echo base_url();?>css/style.css?ver=4.2" rel="stylesheet" type="text/css" />
 	<link href="<?php echo base_url();?>css/style2.css?ver=4.3" rel="stylesheet" type="text/css" />
 <!--	<link href="--><?php //echo base_url();?><!--css/newstyle.css" rel="stylesheet" type="text/css" />-->
 

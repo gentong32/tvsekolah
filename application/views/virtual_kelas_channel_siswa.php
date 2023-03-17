@@ -237,11 +237,21 @@ foreach ($playlist as $datane) {
 								<div class="infomodul">
 									<?php if ($statussoal == 1) { ?>
 										<div style="color:black;">
+										<?php if ($modulke==$modullaluke){?>
+												<center>
+												<button class="btn-materi" 
+														onclick="kerjakansoal();">SOAL
+												</button>
+												</center>
+										<?php }
+										else
+										{ ?>
 											<center>
-											<button class="btn-materi" 
-													onclick="kerjakansoal();">SOAL
+											<button disabled class="btn-materi-ds">SOAL
 											</button>
 											</center>
+										<?php } ?>
+											
 										</div>
 										<div style="color:black;">
 											<table border="0" width="100%"
@@ -267,6 +277,7 @@ foreach ($playlist as $datane) {
 								<div class="infomodul">
 									<?php if ($uraiantugas != "") { ?>
 										<div style="color:black;">
+										<?php if ($modulke==$modullaluke){?>
 											<center>
 											<button class="btn-materi"
 											<?php if($ambilpaket!="Lite")
@@ -274,6 +285,13 @@ foreach ($playlist as $datane) {
 													if ($ambilpaket=="Lite") {?>[Pro keatas]<?php } ?>
 											</button>
 											</center>
+											<?php } else { ?>
+												<center>
+												<button disabled class="btn-materi-ds">TUGAS <?php
+													if ($ambilpaket=="Lite") {?>[Pro keatas]<?php } ?>
+											</button>
+											</center>
+											<?php }?>
 											
 										</div>
 										<div style="color:black;">
@@ -624,7 +642,7 @@ foreach ($playlist as $datane) {
 	}
 
 	function bukamateri() {
-		window.open("<?php echo base_url();?>virtualkelas/materi/<?php echo '/tampilkan/' . $id_playlist;?>", "_self");
+		window.open("<?php echo base_url();?>virtualkelas/materi<?php echo '/tampilkan/' . $id_playlist;?>", "_self");
 	}
 
 	function bukatugas() {

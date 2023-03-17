@@ -16,6 +16,14 @@ foreach ($dafmapel as $datane) {
 	$namamapel[$jml_paket] = $datane->nama_mapel;
 	$idguru[$jml_paket] = $datane->idguru;
 	$namaguru[$jml_paket] = $datane->first_name." ".$datane->last_name;
+	$jmllengkap[$jml_paket] = $datane->statuslengkap;
+	$ketlengkap="";
+	if ($datane->jml_modul==$datane->statuslengkap)
+	$ketlengkap=" [Lengkap]";
+	$jmlmodul[$jml_paket] = $datane->jml_modul;
+	$ketmodul[$jml_paket] = $datane->jml_modul.$ketlengkap;
+	$statusmin1[$jml_paket] = 0;
+	$statusmin2[$jml_paket] = 0;
 	if ($datane->iduserpilih==null)
 		$statuspilih[$jml_paket] = "";
 	else
@@ -30,6 +38,8 @@ foreach ($dafmapel as $datane) {
 			}
 		}
 }
+
+
 
 ?>
 
@@ -59,6 +69,7 @@ foreach ($dafmapel as $datane) {
 			<div class="row">
 				<div class="col-lg-12">
 					<h3 class="text-center">Pilihan Modul</h3>
+					<h5 class="text-center"><?=$namakelas?></h5>
 				</div>
 				<div style="margin-bottom: 10px;">
 					<button class="btn-main"
@@ -77,6 +88,7 @@ foreach ($dafmapel as $datane) {
 						<th style='padding:5;width:5px;'>No</th>
 						<th>Mata Pelajaran</th>
 						<th>Nama Guru</th>
+						<th>Jml Modul</th>
 						<th>Status</th>
 						<th>Aksi</th>
 					</tr>
@@ -90,18 +102,38 @@ foreach ($dafmapel as $datane) {
 							<td><?php echo $nomor[$i]; ?></td>
 							<td><?php echo $namamapel[$i]; ?></td>
 							<td><?php echo $namaguru[$i]; ?></td>
+							<td><?php echo $ketmodul[$i]; ?></td>
 							<td><?php echo $statuspilih[$i]; ?></td>
 							<td>
-								<?php if($modulke==1 || !in_array($idmapel[$i], $do_not_duplicate)){?>
-								<button
-									onclick="window.open('<?php echo base_url(); ?>virtualkelas/updatemodulpilihan/<?php
-									echo $idmapel[$i]."/".$idguru[$i]; ?>', '_self')"
-									id="thumbnail" type="button">Pilih
-								</button>
-								<?php } else
-									{
-										echo "-";
-									} ?>
+								<?php if($modulke==1 || (!in_array($idmapel[$i], $do_not_duplicate))){?>
+									<?php 
+										if ($jmlmodul[$i]==4 && $jmlmodul[$i]==$jmllengkap[$i]){?>
+										<button
+											onclick="window.open('<?php echo base_url(); ?>virtualkelas/updatemodulpilihan/<?php
+											echo $idmapel[$i]."/".$idguru[$i]; ?>', '_self')"
+											id="thumbnail" type="button">Pilih
+										</button>
+									<?php } ?>
+								<?php }
+								else
+								{
+									$statusmin1[$i] = 1;
+								}
+									
+								if(($jmlmodul[$i]<4 || ($jmlmodul[$i]==4 && $jmllengkap[$i]<4)) && $statuspilih[$i]=="Terpilih"){?>
+									<button
+										onclick="window.open('<?php echo base_url(); ?>virtualkelas/batalmodulpilihan/<?php
+										echo $idmapel[$i]."/".$idguru[$i]; ?>', '_self')"
+										id="thumbnail" type="button">Batal Pilih
+									</button>
+									<?php }
+								else
+								{
+									$statusmin2[$i]  = 1;
+								}
+								if ($statusmin1[$i] ==1 && $statusmin2[$i] ==1)
+								echo "-";
+								?>
 							</td>
 						</tr>
 						<?php

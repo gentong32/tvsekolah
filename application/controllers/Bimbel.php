@@ -91,6 +91,12 @@ class Bimbel extends CI_Controller
 			}
 
 			$kodebeli = $getstatusvk['kode_beli'];
+
+			// echo "KODE32432".$kodebeli."<br>";
+			// die();
+
+			// $kodebeli = 'ECR33_10876-5qcu04oeqq1m14';
+
 			$tstrata = $getstatusvk['status_vk_sekarang'];
 			if ($getstatusvk['status_tunggu'] == "tunggu") {
 				redirect("/payment/tunggubayarpaket/$jenis");
@@ -111,11 +117,12 @@ class Bimbel extends CI_Controller
 
 			$this->load->Model('M_bimbel');
 			$dafplaylistall = $this->M_bimbel->getDafPlayListBimbel($id_user, $kodebeli);
-
-//			echo "<pre>";
-//			echo var_dump($dafplaylistall);
-//			echo "</pre>";
-//			die();
+			// $dafplaylistall = $this->M_bimbel->getDafPlayListBimbelEceran();
+			
+			// echo "<pre>";
+			// echo var_dump($dafplaylistall);
+			// echo "</pre>";
+			// die();
 
 			$jmlaktif = 0;
 			$jmlkeranjang = 0;

@@ -230,6 +230,14 @@ class Ekskul extends CI_Controller
 					$data['lunas'] = "<b>" . substr(namabulan_pendek($tanggalsekarang), 2) . "</b> [lunas]".
 						"<br> Oleh Sekolah";
 				}
+
+				$getpremiumsekolah = ceksekolahpremium($npsn);
+				$statussekolah = $getpremiumsekolah['status_sekolah'];
+
+				if ($statussekolah == "Premium")
+				{
+					$data['lunas'] = "<b>Sekolah Premium</b>";
+				}
 			}
 			else
 			{
@@ -253,6 +261,7 @@ class Ekskul extends CI_Controller
 					$data['lunas'] = "<b>" . substr(namabulan_pendek($tanggalsekarang), 2) . "</b> [belum dibayar]".
 					"<br> Oleh Sekolah";
 				}
+
 			}
 
 			$data['statuspeserta'] = $status;
@@ -845,7 +854,9 @@ class Ekskul extends CI_Controller
 			$dataekskul = $this->ambildata($npsn, $id);
 			$status = $this->cekstatus($dataekskul);
 			$dibayaroleh = $this->cekbayareskul();
-			if ($status == 2 || $status == 12 || $dibayaroleh == "sekolah") {
+			$statussekolah = ceksekolahpremium($npsn);
+			
+			if ($status == 2 || $status == 12 || $dibayaroleh == "sekolah" || $statussekolah['status_sekolah']=="Premium") {
 				$data = array();
 				$data['konten'] = "ekskul_video_tambah";
 				$data['addedit'] = "add";

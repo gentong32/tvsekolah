@@ -21,7 +21,9 @@ foreach ($dafpaket as $datane) {
 	$jml_paket++;
 	$nomor[$jml_paket] = $jml_paket;
 	$id_paket[$jml_paket] = $datane->id;
-	$nama_kelas[$jml_paket] = substr($datane->nama_kelas, 6);
+	$nama_kelas[$jml_paket] = $datane->nama_kelas;
+	if (substr($datane->nama_kelas,0,5)=="Kelas")
+	$nama_kelas[$jml_paket] = substr($datane->nama_kelas,6);
 	$semester[$jml_paket] = $datane->semester;
 	$nama_mapel[$jml_paket] = $datane->nama_mapel;
 	$nama_guru[$jml_paket] = $datane->first_name . " " . $datane->last_name;

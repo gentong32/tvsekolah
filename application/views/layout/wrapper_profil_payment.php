@@ -44,6 +44,15 @@ else
 									class="fa fa-user green_color"></i> <span>Profil Saya</span></a></li>
 						<li><a href="<?php echo base_url() . 'profil/sekolah'; ?>"><i
 									class="fa fa-university blue1_color"></i> <span>Sekolah Saya</span></a></li>
+						<li>
+							<a href="#elementkvs" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
+										class="fa fa-folder blue2_color"></i> <span>Kelas Virtual Saya</span></a>
+							<ul class="collapse list-unstyled" id="elementkvs">
+		
+								<li><a href="<?php echo base_url()."virtualkelas/modul_semua/db";?>">> <span>Modul Sekolah Saya</span></a></li>
+					
+							</ul>
+						</li>
 						<?php if (isset($ikuteventkelasvirtual)) 
 						if($ikuteventkelasvirtual=="ikut"){?>
 								<li>
@@ -191,6 +200,9 @@ else
 
 						<?php if($this->session->userdata('siam')==3)
 						{ ?>
+							<li><a href="<?php echo base_url() . 'event/mentor_dashboard'; ?>"><i
+									class="fa fa-star green_color"></i> <span>Event Saya</span></a>
+							</li>
 							<li>
 								<a href="#elementm" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
 										class="fa fa-youtube-play red_color"></i> <span>Menu Mentor</span></a>

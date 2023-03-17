@@ -6,40 +6,45 @@ $namabulan = Array('', 'Jan', 'Peb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Ags', '
 
 $jml_paket = 0;
 foreach ($dafpaket as $datane) {
-	$jml_paket++;
-	$nomor[$jml_paket] = $jml_paket;
-	$id_paket[$jml_paket] = $datane->id;
-	$nama_kelas[$jml_paket] = substr($datane->nama_kelas,6);
-	$semester[$jml_paket] = $datane->semester;
-	$nama_mapel[$jml_paket] = $datane->nama_mapel;
-	$link_paket[$jml_paket] = $datane->link_list;
-	$nama_paket[$jml_paket] = $datane->nama_paket;
-	$kode_paket[$jml_paket] = $datane->kode_beli;
-	if($datane->modulke>0 && $datane->modulke<100)
-		$mingguke[$jml_paket] =  $datane->modulke;
-	else
-		$mingguke[$jml_paket] = "-";
-	$durasi_paket[$jml_paket] = $datane->durasi_paket;
-	$status_paket[$jml_paket] = $datane->status_paket;
-	$status_soal[$jml_paket] = $datane->statussoal;
-	$status_tugas[$jml_paket] = $datane->statustugas;
-	$materi[$jml_paket] = $datane->uraianmateri;
-	$tayang_paket1[$jml_paket] = $datane->tanggal_tayang;
-	$tglvicon = $datane->tglvicon;
-	$tglsekarang = new DateTime();
-	$tglsekarang->setTimezone(new DateTimeZone('Asia/Jakarta'));
-	if ($datane->nama_paket == "UTS"||$datane->nama_paket == "UAS"||$datane->nama_paket == "REMEDIAL UTS"||$datane->nama_paket == "REMEDIAL UAS")
+	if ($datane->semester<=$semesterskr && $datane->modulke<$modulskr)
 	{
-		if ($tglvicon == "2021-01-01 00:00:00")
-			$tayang_paket[$jml_paket] = "-";
+		$jml_paket++;
+		$nomor[$jml_paket] = $jml_paket;
+		$id_paket[$jml_paket] = $datane->id;
+		$nama_kelas[$jml_paket] = $datane->nama_kelas;
+		if (substr($datane->nama_kelas,0,5)=="Kelas")
+		$nama_kelas[$jml_paket] = substr($datane->nama_kelas,6);
+		$semester[$jml_paket] = $datane->semester;
+		$nama_mapel[$jml_paket] = $datane->nama_mapel;
+		$link_paket[$jml_paket] = $datane->link_list;
+		$nama_paket[$jml_paket] = $datane->nama_paket;
+		$kode_paket[$jml_paket] = $datane->kode_beli;
+		if($datane->modulke>0 && $datane->modulke<100)
+			$mingguke[$jml_paket] =  $datane->modulke;
 		else
-			$tayang_paket[$jml_paket] = substr($datane->tanggal_tayang,8,2).' '.$namabulan[(int)(substr($datane->tanggal_tayang,5,2))].' '.substr($datane->tanggal_tayang,0,4).' Pukul '.substr($datane->tanggal_tayang,11,5).' WIB';
-	}
-	else {
-		if ($tglvicon == "2021-01-01 00:00:00")
-			$tayang_paket[$jml_paket] = "<button onclick=\"setjadwalvicon('" . $datane->link_list . "')\">Set Jadwal Baru</button>";
-		else
-			$tayang_paket[$jml_paket] = "<button onclick=\"setjadwalvicon('" . $datane->link_list . "')\">" . substr($datane->tglvicon, 8, 2) . ' ' . $namabulan[(int)(substr($datane->tglvicon, 5, 2))] . ' ' . substr($datane->tglvicon, 0, 4) . ' - ' . substr($datane->tglvicon, 11, 5) . ' WIB' . "</button>";
+			$mingguke[$jml_paket] = "-";
+		$durasi_paket[$jml_paket] = $datane->durasi_paket;
+		$status_paket[$jml_paket] = $datane->status_paket;
+		$status_soal[$jml_paket] = $datane->statussoal;
+		$status_tugas[$jml_paket] = $datane->statustugas;
+		$materi[$jml_paket] = $datane->uraianmateri;
+		$tayang_paket1[$jml_paket] = $datane->tanggal_tayang;
+		$tglvicon = $datane->tglvicon;
+		$tglsekarang = new DateTime();
+		$tglsekarang->setTimezone(new DateTimeZone('Asia/Jakarta'));
+		if ($datane->nama_paket == "UTS"||$datane->nama_paket == "UAS"||$datane->nama_paket == "REMEDIAL UTS"||$datane->nama_paket == "REMEDIAL UAS")
+		{
+			if ($tglvicon == "2021-01-01 00:00:00")
+				$tayang_paket[$jml_paket] = "-";
+			else
+				$tayang_paket[$jml_paket] = substr($datane->tanggal_tayang,8,2).' '.$namabulan[(int)(substr($datane->tanggal_tayang,5,2))].' '.substr($datane->tanggal_tayang,0,4).' Pukul '.substr($datane->tanggal_tayang,11,5).' WIB';
+		}
+		else {
+			if ($tglvicon == "2021-01-01 00:00:00")
+				$tayang_paket[$jml_paket] = "<button onclick=\"setjadwalvicon('" . $datane->link_list . "')\">Set Jadwal Baru</button>";
+			else
+				$tayang_paket[$jml_paket] = "<button onclick=\"setjadwalvicon('" . $datane->link_list . "')\">" . substr($datane->tglvicon, 8, 2) . ' ' . $namabulan[(int)(substr($datane->tglvicon, 5, 2))] . ' ' . substr($datane->tglvicon, 0, 4) . ' - ' . substr($datane->tglvicon, 11, 5) . ' WIB' . "</button>";
+		}
 	}
 }
 
@@ -73,9 +78,23 @@ foreach ($dafpaket as $datane) {
 					<h3 class="text-center">Daftar Modul Saya</h3>
 				</div>
 				<div style="margin-bottom: 10px;">
-					<button class="btn-main"
+					<?php if($opsi=="db")
+					{ ?>
+						<button class="btn-main"
+							onclick="window.location.href='<?php echo base_url(); ?>profil'">Kembali
+						</button>
+						<button class="btn-main"
+							onclick="window.location.href='<?php echo base_url(); ?>virtualkelas/sekolah_saya'">Sekolah Saya
+						</button>
+					<?php }
+					else
+					{ ?>
+						<button class="btn-main"
 							onclick="window.location.href='<?php echo base_url(); ?>virtualkelas/sekolah_saya'">Kembali
-					</button>
+						</button>
+					<?php }
+					?>
+					
 				</div>
 				<hr>
 
@@ -117,6 +136,8 @@ foreach ($dafpaket as $datane) {
 							$belipaket[$i] = " [Pro]";
 						else if ($stratamodul==3)
 							$belipaket[$i] = " [Premium]";
+						if($kode_paket[$i] == "bysekolah")
+							$belipaket[$i] = " [Sekolah]";
 						if (intval($mingguke[$i])>=17)
 							{
 								$mingguke[$i] = "-";

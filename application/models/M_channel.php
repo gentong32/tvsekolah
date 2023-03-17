@@ -57,7 +57,7 @@ class M_channel extends CI_Model
 //			$this->db->where('tp.hari', $buattes);
 //		else
 		$this->db->where('tp.hari', $hari);
-		$this->db->where('tp.durasi_paket>=', '01:30:00');
+		// $this->db->where('tp.durasi_paket>=', '01:30:00');
 		$this->db->where('(status_paket>0)');
 		$this->db->where('(ds.npsn<>"10000010" AND ds.npsn<>"10000002")');
 		$this->db->order_by('ds.modified', 'desc');
@@ -79,6 +79,8 @@ class M_channel extends CI_Model
 		$this->db->join('tb_paket_channel_sekolah tp', 'ds.npsn = tp.npsn', 'left');
 
 		$this->db->where('status', 1);
+
+		if ($opsi=="home")
 		$this->db->where('kadaluwarsa>=', $tglskr);
 		
 		$this->db->group_by("tp.npsn, cekhari");
@@ -86,7 +88,9 @@ class M_channel extends CI_Model
 		//$this->db->where('(status_paket>0)');
 		$this->db->where('(ds.npsn<>"10000010" AND ds.npsn<>"10000002")');
 		$this->db->where('tp.hari', $hari);
-		$this->db->where('tp.durasi_paket>=', '01:30:00');
+		// $this->db->where('tp.durasi_paket>=', '01:30:00');
+
+		
 
 		if ($opsi=="home")
 		{
@@ -95,6 +99,7 @@ class M_channel extends CI_Model
 		}
 		else
 		{
+			$this->db->order_by('kadaluwarsa', 'desc');
 			$this->db->order_by('cekhari', 'asc');
 			$this->db->order_by('status_paket', 'desc');
 		}

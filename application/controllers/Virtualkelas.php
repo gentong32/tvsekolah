@@ -190,6 +190,9 @@ class Virtualkelas extends CI_Controller
 			$getbayarvk = getstatusbelivk(1);
 			$data['statusbelipaket'] = $getbayarvk['status_vk_sekarang'];
 
+			// echo "CODE03224===".$data['statusbelipaket'];
+			
+
 			if ($getbayarvk['status_tunggu'] == "tunggu") {
 				$cekbayarstrata = "Paket " . $getbayarvk['status_vk_sekarang'] . "<br>" . "Menunggu pembayaran upgrade " .
 					$getbayarvk['status_vk_berikutnya'];
@@ -206,10 +209,10 @@ class Virtualkelas extends CI_Controller
 			$totalnilai = 0;
 			$nilaiujian = 0;
 
-//			echo "<pre>";
-//			echo var_dump($nilailatihan);
-//			echo "</pre>";
-//			die();
+			// echo "<pre>";
+			// echo var_dump($nilailatihan);
+			// echo "</pre>";
+			// die();
 
 			foreach ($nilailatihan as $datane) {
 				if ($datane->nama_paket == "UTS" && $datane->semester == 1) {
@@ -252,23 +255,32 @@ class Virtualkelas extends CI_Controller
 			$ceksekolahpremium = ceksekolahpremium();
 			$statusvksekolah = $ceksekolahpremium['status_sekolah'];
 
+			// $data['statusvksekolah'] = $statusvksekolah;
+			// echo "<br>CODE949===".$data['statusvksekolah'];
+
 //			echo "<pre>";
 //			echo var_dump($nilailatihan);
 //			echo "</pre>";
 //			die();
 
 			if ($statusvksekolah == "Pro") {
+				$data['statusbelipaket'] = "Pro";
 				if ($getbayarvk['status_vk_sekarang'] == "Premium")
 					$cekbayarstrata = "[Sekolah Pro]<br>Paket Premium";
 				else
 					$cekbayarstrata = "Paket Sekolah Pro";
 			} else if ($statusvksekolah == "Premium")
-				$cekbayarstrata = "Paket Sekolah Premium";
+				{
+					$data['statusbelipaket'] = "Premium";
+					$cekbayarstrata = "Paket Sekolah Premium";
+				}
 			$data['nilaiujian'] = $nilaiujian;
 			$data['keteranganbayar'] = $cekbayarstrata;
 			$data['totalnilaitugas'] = 0;
-			if ($jml_mapel > 0 && $nmodul > 0)
-				$totalnilailatihan = round($totalnilai / ($jml_mapel * $nmodul), 2);
+
+			
+			if ($jml_mapel > 0)
+				$totalnilailatihan = round($totalnilai / ($jml_mapel), 2);
 			else
 				$totalnilailatihan = 0;
 			$data['totalnilailatihan'] = $totalnilailatihan;
@@ -1190,6 +1202,7 @@ class Virtualkelas extends CI_Controller
 			$data['nilaiujian'] = $nilaiujian;
 			$data['keteranganbayar'] = $cekbayarstrata;
 			$data['totalnilaitugas'] = 0;
+
 			if ($jml_mapel > 0 && $nmodul > 0)
 				$totalnilailatihan = round($totalnilai / ($jml_mapel * $nmodul), 2);
 			else
@@ -1309,8 +1322,10 @@ class Virtualkelas extends CI_Controller
 			$cekmoduluser = $this->M_vksekolah->cekModulPilihan($id_user);
 			$jmlmapelpilihan = count($cekmoduluser);
 
-			
+			// echo var_dump ($cekmoduluser);
 
+			// echo $jmlmapelpilihan.">>".$jmlmapel;
+			
 			if ($jmlmapelpilihan == $jmlmapel) {
 				$this->modul_siswa($linklist, $opsi);
 			} else {
@@ -1319,7 +1334,7 @@ class Virtualkelas extends CI_Controller
 		}
 	}
 
-	public function modul_semua()
+	public function modul_semua($opsi=null)
 	{
 		if (!$this->session->userdata('loggedIn')) {
 			redirect("/");
@@ -1332,6 +1347,13 @@ class Virtualkelas extends CI_Controller
 		$data['konten'] = 'virtual_kelas_modul_siswa_all';
 		$ambilmodul = $this->M_vksekolah->getDafModulSayaSemua($id_user);
 		$data['dafpaket'] = $ambilmodul;
+		$data['opsi'] = $opsi;
+
+		// echo var_dump($data['dafpaket']);
+		// die();
+		$cekmodul = hitungmodulke();
+		$data['semesterskr'] = $cekmodul['semester'];
+		$data['modulskr'] = $cekmodul['nmodul'];
 
 		$this->load->view('layout/wrapper_tabel', $data);
 
@@ -1368,29 +1390,27 @@ class Virtualkelas extends CI_Controller
 		// echo $data['ambilpaket'];
 		// die();
 
-		$cekmodulsaya = $this->M_vksekolah->getModulSaya($linklist);
-
-		// echo var_dump($cekmodulsaya);
-		// die();
-
-		if ($cekmodulsaya)
+		if ($statusvksekolah == "Pro" || $statusvksekolah == "Premium" || $statusvksekolah == "Lite")
 		{
-			$stratamodul = substr($linklist,4,1);
-			if ($stratamodul==1)
-				$data['ambilpaket'] = "Lite";
-			else if ($stratamodul==2)
-				$data['ambilpaket'] = "pro";
-			else if ($stratamodul==3)
-				$data['ambilpaket'] = "premium";
-			$data['modullaluke'] = $cekmodulsaya->modulke;
+			$cekmodulsaya = $this->M_vksekolah->getModulSekolah($linklist);
 		}
-		else if ($data['ambilpaket']!="Lite")
-			redirect("/virtualkelas/sekolah_saya");
-
-		
-
-		
-
+		else
+		{
+			$cekmodulsaya = $this->M_vksekolah->getModulSaya($linklist);
+			if ($cekmodulsaya)
+			{
+				$stratamodul = substr($linklist,4,1);
+				if ($stratamodul==1)
+					$data['ambilpaket'] = "Lite";
+				else if ($stratamodul==2)
+					$data['ambilpaket'] = "pro";
+				else if ($stratamodul==3)
+					$data['ambilpaket'] = "premium";
+			}
+			else if ($data['ambilpaket']!="Lite")
+				redirect("/virtualkelas/sekolah_saya");
+		}
+		$data['modullaluke'] = $cekmodulsaya->modulke;
 		
 
 //		if ($statusvksekolah == "Pro" || $statusvksekolah == "Premium" || $statusvksaya != "0") {
@@ -1403,12 +1423,19 @@ class Virtualkelas extends CI_Controller
 		$mingguke = $cekmodul['nminggu'];
 		$semester = $cekmodul['semester'];
 
+		if ($data['modullaluke']<$modulke)
+		$modulke = 0;
+
 		$data['konten'] = 'virtual_kelas_channel_siswa';
 		$dafmodul = $this->M_vksekolah->getDafModulSaya($id_user, $modulke, $linklist, $semester);
 		$data['dafplaylist'] = $dafmodul;
 		$data['modulke'] = $modulke;
 		$data['mingguke'] = $mingguke;
 		$data['opsi'] = $opsi;
+
+		// echo $modulke;
+		// echo var_dump($dafmodul);
+		// die();
 
 		$cekbukamateri = $this->M_vksekolah->getStatusModulSaya($id_user, $modulke, $linklist);
 		if ($cekbukamateri)
@@ -1513,6 +1540,8 @@ class Virtualkelas extends CI_Controller
 
 		//$data['jenis'] = $jenis;
 		$data['kodelink'] = $linklist;
+
+		
 
 		$this->session->set_userdata('asalpaket', 'channel');
 		$this->load->view('layout/wrapper_umum', $data);
@@ -1793,7 +1822,7 @@ class Virtualkelas extends CI_Controller
 			$datauser = $this->M_login->getUser($id_user);
 			$idkelas = $datauser['kelas_user'];
 			$data['dafmapel'] = $this->M_vksekolah->getModulAda($npsn, $id_user, $idkelas);
-
+			$data['namakelas'] = $this->M_vksekolah->getnamakelas($idkelas);
 			// echo "<pre>";
 			// echo var_dump($data['dafmapel']);
 			// echo "</pre>";
@@ -2545,6 +2574,22 @@ class Virtualkelas extends CI_Controller
 					}
 				}
 			} else if ($this->session->userdata("sebagai") == 2) {
+
+				//////// CEK MODUL LALU BUKAN ///////////
+				$cekmodulsaya = $this->M_vksekolah->getModulSaya($linklist);
+				$ceksekolahpremium = ceksekolahpremium();
+				$statusvksekolah = $ceksekolahpremium['status_sekolah'];
+				if ($statusvksekolah!="non")
+				$cekmodulsaya = $this->M_vksekolah->getModulSekolah($linklist);
+
+				$cekmodul = hitungmodulke();
+				$modulke = $cekmodul['nmodul'];
+			
+				echo $modulke.":::".$cekmodulsaya->modulke;
+				if ($cekmodulsaya->modulke!=$modulke)
+				redirect("/virtualkelas/sekolah_saya");
+				////////////////////////////////
+
 				$id_user = $this->session->userdata("id_user");
 				$data['konten'] = 'virtual_kelas_tugas_siswa';
 				$tugasguru = $this->M_vksekolah->getTugas($tipepaket, $linklist);
@@ -2582,9 +2627,18 @@ class Virtualkelas extends CI_Controller
 				$tgl_sekarang = new DateTime();
 				$tgl_sekarang->setTimezone(new DateTimezone('Asia/Jakarta'));
 
-				if ($tgl_sekarang > $tglbatas) {
-					$expired = true;
-				} else {
+				$ceksekolahpremium = ceksekolahpremium();
+				$statusvksekolah = $ceksekolahpremium['status_sekolah'];
+				if ($statusvksekolah=="non")
+				{
+					if ($tgl_sekarang > $tglbatas) {
+						$expired = true;
+					} else {
+						$expired = false;
+					}
+				}
+				else
+				{
 					$expired = false;
 				}
 			}
@@ -2707,7 +2761,20 @@ class Virtualkelas extends CI_Controller
 			$data['asal'] = "menu";
 
 			$cekmodulsaya = $this->M_vksekolah->getModulSaya($linklist);
-			if (!$cekmodulsaya)
+
+			$ceksekolahpremium = ceksekolahpremium();
+			$statusvksekolah = $ceksekolahpremium['status_sekolah'];
+
+			if ($statusvksekolah!="non")
+			$cekmodulsaya = $this->M_vksekolah->getModulSekolah($linklist);
+
+			$cekmodul = hitungmodulke();
+			$modulke = $cekmodul['nmodul'];
+
+			// echo $statusvksekolah;
+			// die();
+			
+			if ((!$cekmodulsaya && $statusvksekolah=="non") || $cekmodulsaya->modulke!=$modulke)
 				redirect("/virtualkelas/sekolah_saya");
 
 			$sudahujian = 0;
@@ -2867,6 +2934,24 @@ class Virtualkelas extends CI_Controller
 		redirect("/virtualkelas/pilih_modul");
 	}
 
+	public function batalmodulpilihan($idmapel, $idguru)
+	{
+		
+		if (!$this->session->userdata('loggedIn')) {
+			redirect("/");
+		}
+
+		$id_user = $this->session->userdata('id_user');
+		$npsn = $this->session->userdata('npsn');
+				
+		$cekPilihan = $this->M_vksekolah->cekModulPilihan($id_user, $npsn, $idmapel, $idguru);
+		if ($cekPilihan) {
+			$this->M_vksekolah->hapusModulPilihan($id_user, $idmapel, $idguru);
+		}
+		$this->cekmapelsudahdipilih();
+		redirect("/virtualkelas/pilih_modul");
+	}
+
 	private function cekmapelsudahdipilih()
 	{
 		$tgl_sekarang=new DateTime();
@@ -2966,8 +3051,10 @@ class Virtualkelas extends CI_Controller
 			$totalnilai = 0;
 			foreach ($nilailatihan as $datane) {
 				if (!isset($ratamodulke[$datane->modulke]))
-					$ratamodulke[$datane->modulke] = 0;
-				$ratamodulke[$datane->modulke] = $ratamodulke[$datane->modulke] + $datane->highscore;
+					{
+						$ratamodulke[$datane->modulke] = 0;
+					$ratamodulke[$datane->modulke] = $ratamodulke[$datane->modulke] + $datane->highscore;
+				}
 				if (in_array($datane->nama_mapel, $dafmapel)) {
 					$dafnilai[$datane->nama_mapel][$datane->modulke] = $datane->highscore;
 					continue;
@@ -2979,7 +3066,7 @@ class Virtualkelas extends CI_Controller
 			}
 
 //			echo "<pre>";
-//			echo var_dump($ratamodulke);
+//			echo var_dump($dafmapel);
 //			echo "</pre>";
 //			die();
 

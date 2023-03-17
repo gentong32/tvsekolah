@@ -4532,7 +4532,7 @@ class Payment extends CI_Controller
 
 	public function tesmasukinbimbel($orderid)
 	{
-		if($this->session->userdata('a01'))
+		// if($this->session->userdata('a01'))
 		{
 			$transaction = "settlement";
 			$transaction_time = "2022-02-18 09:33:53";

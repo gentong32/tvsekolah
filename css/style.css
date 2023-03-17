@@ -9812,7 +9812,7 @@ i.bg-color-secondary {
 .box-url {
 	position: relative;
 	padding: 30px;
-	background: #fffffff;
+	background: #ffffff;
 	border: solid 1px rgba(0, 0, 0, .2);
 	display: block;
 	border-radius: 20px;
@@ -15976,4 +15976,24 @@ img {
   
   .btn-materi:hover {
 	background: linear-gradient(#408c99, #599bb3);
+  }
+
+  .btn-materi-ds {
+	font-size:15px;
+	font-family:Arial;
+	width:200px !important;
+	height:28px;
+	border-width:1px;
+	color:#fff;
+	border-color:#cccccc;
+	font-weight:bold;
+	border-top-left-radius:8px;
+	border-top-right-radius:8px;
+	border-bottom-left-radius:8px;
+	border-bottom-right-radius:8px;
+	box-shadow: 0px 10px 14px -7px #c1c1c1;
+	text-shadow: 0px 1px 0px #3d768a;
+	background:linear-gradient(#c0c0c0, #c3c3c0);
+	margin-top:5px !important;
+	margin-bottom:15px !important;
   }

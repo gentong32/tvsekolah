@@ -44,6 +44,15 @@ else
 									class="fa fa-user green_color"></i> <span>Profil Saya</span></a></li>
 						<li><a href="<?php echo base_url() . 'profil/sekolah'; ?>"><i
 									class="fa fa-university blue1_color"></i> <span>Sekolah Saya</span></a></li>
+						<li>
+							<a href="#elementkvs" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i
+										class="fa fa-folder blue2_color"></i> <span>Kelas Virtual Saya</span></a>
+							<ul class="collapse list-unstyled" id="elementkvs">
+		
+								<li><a href="<?php echo base_url()."virtualkelas/modul_semua/db";?>">> <span>Modul Sekolah Saya</span></a></li>
+					
+							</ul>
+						</li>
 						<?php if (isset($ikuteventkelasvirtual)) 
 						if($ikuteventkelasvirtual=="ikut"){?>
 								<li>

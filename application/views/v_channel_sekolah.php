@@ -146,7 +146,7 @@ foreach ($dafchannelguru as $datane) {
 				</div>
 			</div>
 
-			<div class="col-lg-8 col-md-8"
+			<div class="col-lg-6 col-md-6"
 				 style="background-color: transparent; font-weight: bold;font-size:16px;
 		 position: relative ; top: 0px; text-align:center; color:black; margin-top:0px;">
 				<?php

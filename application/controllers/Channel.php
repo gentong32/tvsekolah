@@ -254,6 +254,9 @@ class Channel extends CI_Controller
 				// die();
 			}
 
+
+			// echo var_dump($data['dafchannel']);
+			// die();
 			
 
 			// foreach ($data['dafchannel'] as $row)

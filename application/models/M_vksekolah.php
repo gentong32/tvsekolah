@@ -808,7 +808,7 @@ class M_vksekolah extends CI_Model {
 		$this->db->join('tb_user tu','tp.id_user = tu.id','left');
 		$this->db->where('npsn_user', $npsn);
 		$this->db->where('id_kelas<>', 0);
-		$this->db->where('tp.durasi_paket<>', "00:00:00");
+		// $this->db->where('tp.durasi_paket<>', "00:00:00");
 		$this->db->where('((tp.nama_paket="UTS" OR tp.nama_paket="UAS" OR tp.nama_paket="REMEDIAL UTS"
 		OR tp.nama_paket="REMEDIAL UAS") OR modulke>0)');
 		// $this->db->where('id_event', 0);
@@ -870,6 +870,11 @@ class M_vksekolah extends CI_Model {
 
 	public function cekModulPilihan($iduser, $npsn = null, $idmapel = null)
 	{
+		$this->load->Model('M_login');
+		$user = $this->M_login->getUser($iduser);
+		// echo var_dump($user);
+		$kelasuser = $user['kelas_user'];
+
 		$tglsekarang = new DateTime();
 		$tglsekarang->setTimezone(new DateTimeZone("Asia/Jakarta"));
 		$bulan = $tglsekarang->format("n");
@@ -886,8 +891,11 @@ class M_vksekolah extends CI_Model {
 		}
 
 		$this->db->from('tb_vk_pilihguru te');
+		$this->db->join('daf_mapel dm','dm.id = te.id_mapel','left');
+		$this->db->join('daf_kelas dk','dk.id_jenjang = dm.id_jenjang','left');
 		$this->db->where('(created>="'.$batas1.'" AND created<="'.$batas2.'")');
 		$this->db->where('id_user', $iduser);
+		$this->db->where('dk.id', $kelasuser);
 		if ($idmapel!=null)
 		{
 			$this->db->where('npsn_sekolah', $npsn);
@@ -926,6 +934,11 @@ class M_vksekolah extends CI_Model {
 		$this->db->insert('tb_vk_pilihguru', $data);
 	}
 
+	public function hapusModulPilihan($iduser, $idmapel, $idguru){
+    	$data = array('id_user'=>$iduser, 'id_guru'=>$idguru, 'id_mapel'=>$idmapel);
+		$this->db->delete('tb_vk_pilihguru', $data);
+	}
+
 	public function getModulAda($npsn, $iduser, $idkelas)
 	{
 		$tglsekarang = new DateTime();
@@ -946,7 +959,43 @@ class M_vksekolah extends CI_Model {
 		$joinnya = "te.id_user = '".$iduser."' AND te.id_guru = tp.id_user AND te.id_mapel = tp.id_mapel 
 		AND te.created>='$batas1' AND te.created<='$batas2'";
 
-		$this->db->select('tp.*, dm.id as idmapel,dm.nama_mapel,tu.id as idguru,tu.first_name,
+		$this->db->select('tp.*, sum(case when durasi_paket<>"00:00:00" then 1 else 0 end) statuslengkap,count(tp.id_user) as jml_modul,dm.id as idmapel,dm.nama_mapel,tu.id as idguru,tu.first_name,
+		tu.last_name,te.id_user as iduserpilih');
+		$this->db->from('tb_paket_channel tp');
+		$this->db->join('daf_mapel dm','dm.id = tp.id_mapel','left');
+		$this->db->join('tb_user tu','tu.id = tp.id_user','left');
+		$this->db->join('tb_vk_pilihguru te',$joinnya,'left');
+		$this->db->where('npsn_user', $npsn);
+		$this->db->where('modulke>', 0);
+		$this->db->where('tp.id_kelas', $idkelas);
+//		$this->db->where('(te.created>="'.$batas1.'" AND te.created<="'.$batas2.'")');
+		$this->db->group_by(array("tp.id_mapel", "tp.id_user"));
+
+		$result = $this->db->get()->result();
+		return $result;
+	}
+
+	public function getTotalModulLengkap($npsn, $iduser, $idkelas)
+	{
+		$tglsekarang = new DateTime();
+		$tglsekarang->setTimezone(new DateTimeZone("Asia/Jakarta"));
+		$bulan = $tglsekarang->format("n");
+		$tahun = $tglsekarang->format("Y");
+		if ($bulan>=7)
+		{
+			$batas1 = $tahun.'-07-01 00:00:00';
+			$batas2 = ($tahun+1).'-06-30 23:59:59';
+		}
+		else
+		{
+			$batas1 = ($tahun-1).'-07-01 00:00:00';
+			$batas2 = $tahun.'-06-30 23:59:59';
+		}
+
+		$joinnya = "te.id_user = '".$iduser."' AND te.id_guru = tp.id_user AND te.id_mapel = tp.id_mapel 
+		AND te.created>='$batas1' AND te.created<='$batas2'";
+
+		$this->db->select('tp.*, count(tp.id_user) as jml_modul,dm.id as idmapel,dm.nama_mapel,tu.id as idguru,tu.first_name,
 		tu.last_name,te.id_user as iduserpilih');
 		$this->db->from('tb_paket_channel tp');
 		$this->db->join('daf_mapel dm','dm.id = tp.id_mapel','left');
@@ -967,9 +1016,18 @@ class M_vksekolah extends CI_Model {
 		$this->db->from('tb_paket_channel tp');
 		$this->db->where('npsn_user', $npsn);
 		$this->db->where('modulke>', 0);
+		$this->db->where('id_kelas>', 0);
 		$this->db->group_by("tp.id_mapel");
 		$result = $this->db->get()->result();
 		return $result;
+	}
+
+	public function getnamakelas($idkelas)
+	{
+		$this->db->from('daf_kelas');
+		$this->db->where('id', $idkelas);
+		$result = $this->db->get()->row();
+		return $result->nama_kelas;
 	}
 
 	public function getDafModulSaya($idsaya, $modulke = null, $linklist = null, $semester = null)
@@ -1019,6 +1077,10 @@ class M_vksekolah extends CI_Model {
 
 	public function getDafModulSayaSemua($idsaya)
 	{
+		$this->load->model('M_login');
+		$getuserdata = $this->M_login->getUser($idsaya);
+		$npsn = $getuserdata['npsn'];
+
 		$tglsekarang = new DateTime();
 		$tglsekarang->setTimezone(new DateTimeZone("Asia/Jakarta"));
 		$bulan = $tglsekarang->format("n");
@@ -1035,7 +1097,7 @@ class M_vksekolah extends CI_Model {
 		}
 		$joinnya = "te.id_guru = tpc.id_user AND te.id_mapel = tpc.id_mapel  
 		AND te.created>='$batas1' AND te.created<='$batas2'";
-		//$this->db->select('*,tu2.first_name as first_nameguru,tu2.last_name as last_nameguru');
+		$this->db->select('tpc.id AS id, tpc.link_list,tpc.id_kelas AS idkelas,dk.nama_kelas, tpc.semester, dm.nama_mapel, tu2.first_name,tu2.last_name,nama_paket,modulke,tk.kode_beli as kode_beli,status_paket,statussoal,statustugas,uraianmateri,durasi_paket,tpc.id_mapel as idmapel,tanggal_tayang,tglvicon');
 		$this->db->from('tb_paket_channel tpc');
 		$this->db->join('tb_virtual_kelas tk','tk.link_paket = tpc.link_list','left');
 		$this->db->join('daf_kelas dk','dk.id = tpc.id_kelas','left');
@@ -1047,11 +1109,30 @@ class M_vksekolah extends CI_Model {
 		$this->db->join('tb_user tu2', 'tu2.id = te.id_guru', 'left');
 		$this->db->where('(tk.id_user=' . $idsaya . ')');
 		$this->db->group_by("tpc.link_list");
-		$this->db->order_by('tpc.id_kelas', 'desc');
-		$this->db->order_by('tpc.semester', 'desc');
-		$this->db->order_by('tpc.modulke', 'asc');
-		$this->db->order_by('tpc.id_mapel', 'asc');
-		$result = $this->db->get()->result();
+		$query1 = $this->db->get_compiled_select();
+
+		$this->db->select('tpc.id AS id, tpc.link_list, tpc.id_kelas AS idkelas,dk.nama_kelas, tpc.semester, dm.nama_mapel, tu2.first_name,tu2.last_name,nama_paket,modulke,"bysekolah" as kode_beli,status_paket,statussoal,statustugas,uraianmateri,durasi_paket,tpc.id_mapel as idmapel,tanggal_tayang,tglvicon');
+		$this->db->from('tb_paket_channel tpc');
+		$this->db->join('daf_kelas dk','dk.id = tpc.id_kelas','left');
+		$this->db->join('daf_mapel dm','dm.id = tpc.id_mapel','left');
+		$this->db->join('tb_vk_pilihguru te', 'te.id_guru = tpc.id_user AND te.id_user='. $idsaya, 'left');
+		$this->db->join('tb_user tu2', 'tu2.id = te.id_guru', 'left');
+		$this->db->where('(tpc.npsn_user=' . $npsn . ')');
+		$this->db->where('(tpc.id_mapel>0)');
+		$this->db->where('(id_pilih<>"")');
+		$this->db->where('(durasi_paket<>"00:00:00")');
+		$this->db->where('(statussoal=1)');
+		$this->db->where('(statustugas=1)');
+		$this->db->where('(uraianmateri<>"")');
+		$this->db->where('(id_event=0)'); 
+		$this->db->order_by('idkelas', 'asc');
+		$this->db->order_by('semester', 'asc');
+		$this->db->order_by('modulke', 'asc');
+		$this->db->order_by('idmapel', 'asc');
+		$query2 = $this->db->get_compiled_select();
+
+		$query = $this->db->query($query1 . " UNION " . $query2);
+		$result = $query->result();
 		return $result;
 	}
 
@@ -1190,8 +1271,8 @@ class M_vksekolah extends CI_Model {
 
 		$this->db->from('tb_soal_guru_nilai ts');
 		$this->db->join('tb_paket_channel tpc', 'tpc.link_list = ts.linklist', 'left');
-		$this->db->join('tb_vk_pilihguru te', $joinnya, 'both');
-		$this->db->join('daf_mapel dm','dm.id = te.id_mapel','left');
+		// $this->db->join('tb_vk_pilihguru te', $joinnya, 'both');
+		$this->db->join('daf_mapel dm','dm.id = tpc.id_mapel','left');
 		$this->db->where('(ts.iduser=' . $iduser . ')');
 		$this->db->where('(tpc.modulke>0)');
 		$this->db->where('(tpc.modulke<=' . $modulke . ')');
@@ -1356,6 +1437,15 @@ class M_vksekolah extends CI_Model {
 		$this->db->join('tb_paket_channel tpc', 'tpc.link_list = tv.link_paket','left');
 		$this->db->where('link_paket',$linkpaket);
 		$this->db->where('tv.id_user',$this->session->userdata('id_user'));
+
+		$result = $this->db->get()->last_row();
+		return $result;
+	}
+
+	public function getModulSekolah($linkpaket)
+	{
+		$this->db->from('tb_paket_channel');
+		$this->db->where('link_list',$linkpaket);
 
 		$result = $this->db->get()->last_row();
 		return $result;

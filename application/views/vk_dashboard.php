@@ -5,7 +5,7 @@ $jmlmodul = 0;
 $jmlujian = 0;
 
 // echo "jmlgurupilih:".$jmlgurupilih;
-// echo "<br>jmlmapelaktif:".$jmlmapelaktif;
+// echo "<br>jmlmapel:".$jmlmapel;
 
 if ($datamodul)
 	foreach ($datamodul as $data) {
@@ -163,6 +163,9 @@ $jmlmodulujian = $jmlmodul + $jmlujian;
 					<h5><?php echo strtoupper($namakelas)." SEMESTER ". $semester; ?></h5>
 				</center>
 			</div>
+			<button class="btn-main" onclick="window.open('<?php echo base_url()?>virtualkelas/pilih_modul','_self')">Guru dan Mapel</button>
+			<button class="btn-main" onclick="window.open('<?php echo base_url()?>virtualkelas/modul_semua','_self')">Modul Saya</button>
+			<hr style="margin-top:15px;margin-bottom:15px;">
 			<div class="row">
 				<div class="col-xl-3 col-md-6">
 					<div class="card bg-primary text-white mb-4">
@@ -174,7 +177,7 @@ $jmlmodulujian = $jmlmodul + $jmlujian;
 								<?php
 								if ($jmlgurupilih > 0) {
 									if (is_numeric($modulke))
-										echo "<a class=\"small text-white\" href=\"" . base_url() . "virtualkelas/pilih_modul/\">Modul ke-" . $modulke . "</a>";
+										echo "Modul ke-" . $modulke;
 									else
 										echo strtoupper($modulke); ?><br>
 								<?php }
@@ -205,14 +208,12 @@ $jmlmodulujian = $jmlmodul + $jmlujian;
 									}
 								}
 								?>
-								<hr style="margin-top: 15px;margin-bottom: 5px; ">
-								<a class='small text-white' href='<?php echo base_url() .
-									"virtualkelas/modul_semua"; ?>'>Modul Saya</a>
+								
 
 								<?php
-								if ($jmlgurupilih < $jmlmapelaktif) {
-									echo "<button class='s btn-main' onclick='window.open(\"" . base_url() . "virtualkelas/pilih_modul/" . "\")'>Pilih Guru dan Mapel</button>";
-								}
+								// if ($jmlgurupilih < $jmlmapelaktif) {
+								// 	echo "<button class='s btn-main' onclick='window.open(\"" . base_url() . "virtualkelas/pilih_modul/" . "\")'>Pilih Guru dan Mapel</button>";
+								// }
 
 								?>
 								<div class="small text-white"></div>
@@ -241,7 +242,7 @@ $jmlmodulujian = $jmlmodul + $jmlujian;
 											<span style="font-size: 12px;"><i>[Belum tersedia modul]</i></span>
 										<?php } ?>
 									</div>
-									<?php if ($jmlmapel > 0){ ?>
+									<?php if ($jmlmapel > 0 && $jmlgurupilih == $jmlmapelaktif){ ?>
 								</a>
 							<?php } ?>
 								<hr style="margin-top: 10px;margin-bottom: 10px;">
